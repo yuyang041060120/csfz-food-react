@@ -13,10 +13,15 @@ module.exports = {
             __PRERELEASE__: JSON.stringify(JSON.parse(process.env.BUILD_PRERELEASE || 'false'))
         })
     ],
+    resolve: {
+        alias: {
+            'react': '../lib/react',
+            'react-router': '../lib/ReactRouter'
+        }
+    },
     module: {
         loaders: [
-            {test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader', query: {compact: false}},
-            {test: /\.jsx$/, exclude: /node_modules/, loader: 'babel-loader', query: {compact: false}}
+            {test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader', query: {compact: false}}
         ]
     }
 };
