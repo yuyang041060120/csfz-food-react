@@ -1,0 +1,98 @@
+{
+    "product.detail": {
+        "in": {
+            "from": "^/chanpin/(.+)\\.html$",
+            "to": "/product/$1",
+            "last": true
+        },
+        "out": {
+            "from": "^/product/(.+)$",
+            "to": "/chanpin/$1.html",
+            "last": true
+        }
+    },
+    "catalog.product": {
+        "in": {
+            "from": "^/catalog/(.+)\\.html$",
+            "to": "/catalog/$1",
+            "last": true
+        },
+        "out": {
+            "from": "^/catalog/(.+)$",
+            "to": "/catalog/$1.html",
+            "last": true
+        }
+    },
+    "showroom.index": {
+        "in": {
+            "from": "^/company-([^/.]+)/$",
+            "to": "/showroom/$1/",
+            "last": true
+        },
+        "out": {
+            "from": "^/showroom/([^/.]+)/$",
+            "to": "/company-$1/",
+            "last": true
+        }
+    },
+    "showroom.company": {
+        "in": {
+            "from": "^/company-(.+)/info/$",
+            "to": "/showroom/$1/company",
+            "last": true
+        },
+        "out": {
+            "from": "^/showroom/(.+)/company$",
+            "to": "/company-$1/info/",
+            "last": true
+        }
+    },
+    "showroom.merchant": {
+        "in": {
+            "from": "^/company-(.+)/jiameng/$",
+            "to": "/showroom/$1/merchant",
+            "last": true
+        },
+        "out": {
+            "from": "^/showroom/(.+)/merchant$",
+            "to": "/company-$1/jiameng/",
+            "last": true
+        }
+    },
+    "showroom.product.all": {
+        "in": {
+            "from": "^/company-(.+)/offerlist/$",
+            "to": "/showroom/$1/product/",
+            "last": true
+        },
+        "out": {
+            "from": "^/showroom/(.+)/product/$",
+            "to": "/company-$1/offerlist/",
+            "last": true
+        }
+    },
+    "showroom.product.group": {
+        "in": {
+            "from": "^/company-(.+)/offerlist-(.+)\\.html$",
+            "to": "/showroom/$1/group/$2",
+            "last": true
+        },
+        "out": {
+            "from": "^/showroom/(.+)/group/(.+)$",
+            "to": "/company-$1/offerlist-$2.html",
+            "last": true
+        }
+    },
+    "special": {
+        "in": {
+            "from": "^/special/(.+)\\.html$",
+            "to": "/special/$1",
+            "last": true
+        },
+        "out": {
+            "from": "^/special/(.+)$",
+            "to": "/special/$1.html",
+            "last": true
+        }
+    }
+}

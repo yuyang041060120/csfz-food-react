@@ -1,0 +1,15 @@
+body {
+    margin-top: 70px;
+}
+.list-group-item h5{
+    cursor: pointer;
+}
+
+.index-store-item{
+    font-size: 13px;
+}
+
+.store-item{
+    border: none;
+    padding-left: 0;
+}
