@@ -1,12 +1,4 @@
 var Store = React.createClass({
-    render: function () {
-        return (
-            <Store.StoreBox />
-        )
-    }
-});
-
-Store.StoreBox = React.createClass({
     getInitialState: function () {
         return {list: []};
     },

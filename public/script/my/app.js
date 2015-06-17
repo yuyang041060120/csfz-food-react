@@ -4,6 +4,9 @@ var DefaultRoute = ReactRouter.DefaultRoute;
 
 
 var App = React.createClass({
+    componentDidMount: function () {
+
+    },
     render: function () {
         return (
             <div>

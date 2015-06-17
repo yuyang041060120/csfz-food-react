@@ -1,20 +1,20 @@
 {
-  "name": "react-router-demo",
-  "description": "react router demo",
+  "name": "csfz-food-react",
+  "description": "csfz food order online",
   "version": "1.0.0",
   "author": {
     "name": "yuyangyang"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/yuyang041060120/react-router-demo"
+    "url": "https://github.com/yuyang041060120/csfz-food-react"
   },
   "devDependencies": {
     "webpack": "~1.9.5",
     "babel-loader": "~5.0.0"
   },
   "keywords": [
-    "react router"
+    "csfz food react"
   ],
   "dependencies": {
     "express": "~4.11.2",
