@@ -28,6 +28,9 @@ Validator.methods = {
     },
     pattern: function (value, rulevalue) {
         return rulevalue.test(value);
+    },
+    equalTo: function (value, rulevalue, component) {
+        return value === component.state._value;
     }
 };
 
@@ -103,7 +106,8 @@ Validator.Form = React.createClass({
         var name = component.props.name;
         var isValid;
         for (var rule in this.getRulesByName(name)) {
-            isValid = Validator.methods[rule].bind(this)(value, this.getRuleValueByNameAndRule(name, rule));
+            var ruleValue = this.getRuleValueByNameAndRule(name, rule);
+            isValid = Validator.methods[rule].bind(this)(value, ruleValue, this.inputs[ruleValue]);
 
             if (!isValid) {
                 component.setState({_isValid: false, _validType: rule});
@@ -127,7 +131,7 @@ Validator.Form = React.createClass({
             if (this.props.handleSubmit) {
                 this.props.handleSubmit(this.model, e);
             }
-        }else{
+        } else {
             e.preventDefault();
         }
 
@@ -169,7 +173,7 @@ Validator.Form = React.createClass({
         return React.createElement('form', {
             method: method,
             action: action,
-            className:className,
+            className: className,
             onSubmit: this.handleSubmit
         }, null, this.registerInputs(this.props.children));
     }

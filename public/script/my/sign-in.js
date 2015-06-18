@@ -59,8 +59,8 @@ var SignIn = React.createClass({
                         return <p key={index}>{error}</p>
                     })}
                 </div>
-                <LoginInput name="email" placeholder="Email" type="text" key="email"/>
-                <LoginInput name="password" placeholder="Password" type="password" key="password"/>
+                <SigninInput name="email" placeholder="Email" type="text" key="email"/>
+                <SigninInput name="password" placeholder="Password" type="password" key="password"/>
 
                 <div className="form-group">
                     <div className="col-sm-12">
@@ -73,7 +73,7 @@ var SignIn = React.createClass({
     }
 });
 
-var LoginInput = React.createClass({
+var SigninInput = React.createClass({
     mixins: [Validator.Mixin],
     handleChange: function (e) {
         this.setValue(e.currentTarget.value);
