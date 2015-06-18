@@ -13,10 +13,17 @@ var Navbar = React.createClass({
                             <li><Link to="index">Index</Link></li>
                             <li><Link to="store">Store</Link></li>
                         </ul>
-                        <ul className="nav navbar-nav navbar-right">
-                            <li><Link to="login">Login</Link></li>
-                            <li><a href="{{url 'logout'}}">ÍË³ö</a></li>
-                        </ul>
+                        {auth.isLogin() ?
+                            <ul className="nav navbar-nav navbar-right">
+                                <li><a>{auth.getUser().realname}</a></li>
+                                <li><Link to="sign-out">Sign out</Link></li>
+                            </ul> :
+                            <ul className="nav navbar-nav navbar-right">
+                                <li><Link to="sign-in">Sign in</Link></li>
+                                <li><Link to="sign-up">Sign up</Link></li>
+                            </ul>
+                        }
+
                     </div>
                 </div>
             </nav>

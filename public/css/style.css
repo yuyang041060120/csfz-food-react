@@ -18,3 +18,12 @@ body {
     font-size: 12px;
     color: #a94442;
 }
+
+.form-container{
+    margin: 0 auto;
+    width: 400px;
+}
+
+.form-error{
+    color: #a94442;
+}
