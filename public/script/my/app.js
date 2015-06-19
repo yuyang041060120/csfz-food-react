@@ -28,6 +28,7 @@ var routes = (
         <Route name="sign-out" path="signout" handler={SignOut}/>
         <Route name="manage" path="manage" handler={Manage}>
             <Route name="manage-store" path="store" handler={ManageStore}/>
+            <Route name="manage-food" path=":storeId/food" handler={ManageFood}/>
         </Route>
     </Route>
 );
