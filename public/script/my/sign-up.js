@@ -56,7 +56,7 @@ var SignUp = React.createClass({
 
         $.post('/vo/signup', model, function (response) {
             if (response.code === constants.resCode.COMMON) {
-                auth.signin(JSON.stringify(response.user));
+                auth.signin(JSON.stringify(response.data));
                 this.transitionTo('index');
             } else {
                 this.setState({errors: response.errors, isSubmitting: false});

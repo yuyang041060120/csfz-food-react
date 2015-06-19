@@ -26,6 +26,9 @@ var routes = (
         <Route name="sign-in" path="signin" handler={SignIn}/>
         <Route name="sign-up" path="signup" handler={SignUp}/>
         <Route name="sign-out" path="signout" handler={SignOut}/>
+        <Route name="manage" path="manage" handler={Manage}>
+            <Route name="manage-store" path="store" handler={ManageStore}/>
+        </Route>
     </Route>
 );
 

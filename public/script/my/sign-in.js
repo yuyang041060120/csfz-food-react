@@ -31,7 +31,7 @@ var SignIn = React.createClass({
             }
         }
     },
-    statics:{
+    statics: {
         willTransitionTo: auth.handle
     },
     handleSubmit: function (model, e) {
@@ -39,7 +39,7 @@ var SignIn = React.createClass({
         this.setState({isSubmitting: true});
         $.post('/vo/signin', model, function (response) {
             if (response.code === constants.resCode.COMMON) {
-                auth.signin(JSON.stringify(response.user));
+                auth.signin(JSON.stringify(response.data));
                 this.transitionTo('index');
             } else {
                 this.setState({errors: response.errors, isSubmitting: false});

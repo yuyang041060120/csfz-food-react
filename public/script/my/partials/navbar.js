@@ -12,6 +12,7 @@ var Navbar = React.createClass({
                         <ul className="nav navbar-nav">
                             <li><Link to="index">Index</Link></li>
                             <li><Link to="store">Store</Link></li>
+                            <li><Link to="manage-store">Manage</Link></li>
                         </ul>
                         {auth.isLogin() ?
                             <ul className="nav navbar-nav navbar-right">
