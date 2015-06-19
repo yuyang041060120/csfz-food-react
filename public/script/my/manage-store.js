@@ -84,9 +84,9 @@ ManageStore.New = React.createClass({
     render: function () {
         return (
             <div className="page-header">
-                <h3>Store List
+                <h3>店铺列表
                     <button className="btn btn-primary pull-right" onClick={this.handleClick}>
-                        Add New Store
+                        新增店铺
                     </button>
                 </h3>
             </div>
@@ -114,13 +114,13 @@ ManageStore.List = React.createClass({
                 <col width="35%"/>
                 <thead>
                 <tr>
-                    <th>Store Name</th>
-                    <th>Main Product</th>
-                    <th>Telephone</th>
-                    <th>Address</th>
-                    <th>Add Time</th>
-                    <th>Adder</th>
-                    <th>Operations</th>
+                    <th>店铺名称</th>
+                    <th>主营产品</th>
+                    <th>电话</th>
+                    <th>地址</th>
+                    <th>添加时间</th>
+                    <th>添加人</th>
+                    <th>操作</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -165,7 +165,7 @@ ManageStore.ItemShow = React.createClass({
     },
     handleDelete: function (id, index) {
         Alert.show({
-            title: 'Ensure Delete This Store?',
+            title: '确定删除该店铺？',
             onCertain: function () {
                 StoreListActions.deleteItem(id, index, function () {
                     Alert.close();
@@ -188,12 +188,12 @@ ManageStore.ItemShow = React.createClass({
                 <td>
                     <div className="btn-group btn-group-xs">
                         <button type="button" className="btn btn-primary"
-                                onClick={this.handleEdit}>Edit
+                                onClick={this.handleEdit}>修改
                         </button>
                         <button type="button" className="btn btn-danger"
-                                onClick={this.handleDelete.bind(this,store._id,index)}>Delete
+                                onClick={this.handleDelete.bind(this,store._id,index)}>删除
                         </button>
-                        <Link to="manage-food"className="btn btn-info" params={{storeId:store._id}}>Manage Foods</Link>
+                        <Link to="manage-food"className="btn btn-info" params={{storeId:store._id}}>套餐管理</Link>
                     </div>
                 </td>
             </tr>
@@ -216,8 +216,19 @@ ManageStore.ItemNew = React.createClass({
     render: function () {
         var index = this.props.index;
         return (
-            <tr>
-                <td><input type="text" className="form-control input-sm" maxLength="20" ref="name"/></td>
+            <tr className="active">
+                <td>
+                    <div className="tip-hd">
+                        <div className="tooltip top" role="tooltip">
+                            <div className="tooltip-arrow"></div>
+                            <div className="tooltip-inner">
+                                Tooltip on the left
+                            </div>
+                        </div>
+                        <input type="text" className="form-control input-sm" maxLength="20" ref="name"/>
+                    </div>
+
+                </td>
                 <td><input type="text" className="form-control input-sm" maxLength="20" ref="mainProduct"/></td>
                 <td><input type="text" className="form-control input-sm" maxLength="20" ref="telephone"/></td>
                 <td><input type="text" className="form-control input-sm" maxLength="20" ref="address"/></td>
@@ -226,10 +237,10 @@ ManageStore.ItemNew = React.createClass({
                 <td>
                     <div className="btn-group btn-group-xs">
                         <button type="button" className="btn btn-primary"
-                                onClick={this.handleCreate.bind(this,index)}>Create
+                                onClick={this.handleCreate.bind(this,index)}>新增
                         </button>
                         <button type="button" className="btn btn-default"
-                                onClick={this.handleCancel.bind(this,index)}>Cancel
+                                onClick={this.handleCancel.bind(this,index)}>取消
                         </button>
                     </div>
                 </td>
@@ -256,7 +267,7 @@ ManageStore.ItemEdit = React.createClass({
         var store = this.props.data;
         var index = this.props.index;
         return (
-            <tr>
+            <tr className="active">
                 <td><input type="text" className="form-control input-sm" defaultValue={store.name} ref="name"/></td>
                 <td><input type="text" className="form-control input-sm" defaultValue={store.mainProduct}
                            ref="mainProduct"/></td>
@@ -269,10 +280,10 @@ ManageStore.ItemEdit = React.createClass({
                 <td>
                     <div className="btn-group btn-group-xs">
                         <button type="button" className="btn btn-info"
-                                onClick={this.handleSave.bind(this,store._id,index)}>Save
+                                onClick={this.handleSave.bind(this,store._id,index)}>保存
                         </button>
                         <button type="button" className="btn btn-default"
-                                onClick={this.handleCancel}>Cancel
+                                onClick={this.handleCancel}>取消
                         </button>
                     </div>
                 </td>

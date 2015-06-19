@@ -2,14 +2,14 @@ var AlertComponent = React.createClass({
     handleClose: function () {
         if (this.props.onClose) {
             this.props.onClose();
-        }else{
+        } else {
             Alert.close();
         }
     },
     handleCertain: function () {
         if (this.props.onCertain) {
             this.props.onCertain();
-        }else{
+        } else {
             Alert.close();
         }
     },
@@ -27,9 +27,9 @@ var AlertComponent = React.createClass({
                                 <h4 className="modal-title">{this.props.title}</h4>
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-default" onClick={this.handleClose}>Cancel
+                                <button type="button" className="btn btn-primary" onClick={this.handleCertain}>确定
                                 </button>
-                                <button type="button" className="btn btn-primary" onClick={this.handleCertain}>Certain
+                                <button type="button" className="btn btn-default" onClick={this.handleClose}>取消
                                 </button>
                             </div>
                         </div>
