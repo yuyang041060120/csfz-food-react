@@ -48,8 +48,13 @@ td {
     background-color: black;
 }
 
-.modal-dialog {
+.modal-dialog{
+    width: 300px;
+}
+
+.dialog {
     z-index: 1032;
+    position: fixed;
 }
 
 .tip-hd {
@@ -59,4 +64,13 @@ td {
 .tip-hd > .tooltip {
     opacity: 1;
     top: -30px;
+}
+
+.mg-rt {
+    margin-right: 5px;
+}
+
+.index-current {
+    padding-top: 5px;
+    background-color: #fefffd;
 }

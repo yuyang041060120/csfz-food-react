@@ -11,7 +11,7 @@ var StoreDetail = React.createClass({
         return (
             <div className="container">
                 <div className="page-header">
-                    <h3>Food List</h3>
+                    <h3>套餐列表</h3>
                 </div>
                 <StoreDetail.FoodList data={this.state.data.foods}/>
             </div>
