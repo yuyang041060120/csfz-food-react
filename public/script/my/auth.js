@@ -1,15 +1,15 @@
 var auth = {
     signin: function (user) {
-        localStorage.setItem('user', user);
+        sessionStorage.setItem('user', user);
     },
     signout: function () {
-        localStorage.removeItem('user');
+        sessionStorage.removeItem('user');
     },
     isLogin: function () {
-        return !!localStorage.getItem('user');
+        return !!sessionStorage.getItem('user');
     },
     getUser: function () {
-        return JSON.parse(localStorage.getItem('user'));
+        return JSON.parse(sessionStorage.getItem('user'));
     },
     handle: function (transition, params, query, callback) {
         if (auth.isLogin()) {

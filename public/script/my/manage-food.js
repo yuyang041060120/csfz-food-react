@@ -35,11 +35,13 @@ var FoodListStore = Reflux.createStore({
             }
         }.bind(this));
     },
-    onCreateItem(item, index){
+    onCreateItem(item, index, callback){
         $.post('/vo/manage/' + storeId + '/food/new', item, function (response) {
             if (response.code === constants.resCode.COMMON) {
                 this.items[index] = response.data;
                 this.trigger(this.items);
+            } else {
+                callback(response.errors);
             }
         }.bind(this));
     },
@@ -49,6 +51,8 @@ var FoodListStore = Reflux.createStore({
                 this.items[index] = response.data;
                 this.trigger(this.items);
                 callback();
+            } else {
+                callback(response.errors);
             }
         }.bind(this));
     },
@@ -108,19 +112,19 @@ ManageFood.List = React.createClass({
         return (
             <table className="table table-hover manage-table">
                 <col width="18%"/>
-                <col width="8%"/>
+                <col width="15%"/>
                 <col width="20%"/>
-                <col width="10%"/>
-                <col width="10%"/>
-                <col width="10%"/>
-                <col width="10%"/>
-                <col width="35%"/>
+                <col width="8%"/>
+                <col width="8%"/>
+                <col width="8%"/>
+                <col width="8%"/>
+                <col width="15%"/>
                 <thead>
                 <tr>
                     <th>套餐名称</th>
                     <th>套餐价格</th>
-                    <th>店铺名称</th>
-                    <th>添加事件</th>
+                    <th>所属店铺</th>
+                    <th>添加时间</th>
                     <th>添加人</th>
                     <th>更新时间</th>
                     <th>更新人</th>
@@ -160,6 +164,20 @@ ManageFood.Item = React.createClass({
         }
 
         return render;
+    }
+});
+
+
+ManageFood.Tip = React.createClass({
+    render: function () {
+        return (
+            <div className="tooltip top">
+                <div className="tooltip-arrow"></div>
+                <div className="tooltip-inner">
+                    {this.props.content}
+                </div>
+            </div>
+        )
     }
 });
 
@@ -206,21 +224,56 @@ ManageFood.ItemShow = React.createClass({
 });
 
 ManageFood.ItemNew = React.createClass({
+    getInitialState: function () {
+        return {errors: {}};
+    },
     handleCreate: function (index) {
-        FoodListActions.createItem({
-            name: this.refs.name.getDOMNode().value,
-            price: this.refs.price.getDOMNode().value
-        }, index);
+        var model = {
+            name: this.refs.name.getDOMNode().value.trim(),
+            price: this.refs.price.getDOMNode().value.trim()
+        };
+
+        FoodListActions.createItem(model, index, function (errors) {
+            this.setState({errors: errors});
+        }.bind(this));
     },
     handleCancel: function (index) {
         FoodListActions.removeItem(index);
     },
+    handleFocus: function (type) {
+        delete this.state.errors[type];
+        this.forceUpdate();
+    },
     render: function () {
         var index = this.props.index;
+
+        var nameErr = this.state.errors.name;
+        var priceErr = this.state.errors.price;
+
         return (
             <tr className="active">
-                <td><input type="text" className="form-control input-sm" maxLength="20" ref="name"/></td>
-                <td><input type="text" className="form-control input-sm" maxLength="10" ref="price"/></td>
+                <td>
+                    <div className="tip-hd">
+                        {nameErr ? <ManageStore.Tip content={nameErr}/> : ''}
+                        <input
+                            type="text"
+                            className="form-control input-sm"
+                            maxLength="20"
+                            onFocus={this.handleFocus.bind(this,'name')}
+                            ref="name"/>
+                    </div>
+                </td>
+                <td>
+                    <div className="tip-hd">
+                        {priceErr ? <ManageStore.Tip content={priceErr}/> : ''}
+                        <input
+                            type="text"
+                            className="form-control input-sm"
+                            maxLength="10"
+                            onFocus={this.handleFocus.bind(this,'price')}
+                            ref="price"/>
+                    </div>
+                </td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -242,24 +295,57 @@ ManageFood.ItemNew = React.createClass({
 });
 
 ManageFood.ItemEdit = React.createClass({
+    getInitialState: function () {
+        return {errors: {}};
+    },
     handleSave: function (id, index) {
-        FoodListActions.updateItem(id, {
-            name: this.refs.name.getDOMNode().value,
-            price: this.refs.price.getDOMNode().value
-        }, index, function () {
-            this.props.toggleEdit(false);
+        var model = {
+            name: this.refs.name.getDOMNode().value.trim(),
+            price: this.refs.price.getDOMNode().value.trim()
+        };
+
+        FoodListActions.updateItem(id, model, index, function (errors) {
+            errors ? this.setState({errors: errors}) : this.props.toggleEdit(false);
         }.bind(this));
     },
     handleCancel: function () {
         this.props.toggleEdit(false);
     },
+    handleFocus: function (type) {
+        delete this.state.errors[type];
+        this.forceUpdate();
+    },
     render: function () {
         var food = this.props.data;
         var index = this.props.index;
+
+        var nameErr = this.state.errors.name;
+        var priceErr = this.state.errors.price;
+
         return (
             <tr className="active">
-                <td><input type="text" className="form-control input-sm" defaultValue={food.name} ref="name"/></td>
-                <td><input type="text" className="form-control input-sm" defaultValue={food.price} ref="price"/></td>
+                <td>
+                    <div className="tip-hd">
+                        {nameErr ? <ManageStore.Tip content={nameErr}/> : ''}
+                        <input
+                            type="text"
+                            className="form-control input-sm"
+                            defaultValue={food.name}
+                            onFocus={this.handleFocus.bind(this,'name')}
+                            ref="name"/>
+                    </div>
+                </td>
+                <td>
+                    <div className="tip-hd">
+                        {priceErr ? <ManageStore.Tip content={priceErr}/> : ''}
+                        <input
+                            type="text"
+                            className="form-control input-sm"
+                            defaultValue={food.price}
+                            onFocus={this.handleFocus.bind(this,'price')}
+                            ref="price"/>
+                    </div>
+                </td>
                 <td>{food.store.name}</td>
                 <td>{moment(food.addTime).format('YYYY-MM-DD')}</td>
                 <td>{food.creater.realname}</td>

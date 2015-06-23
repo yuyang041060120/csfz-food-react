@@ -41,18 +41,16 @@ var StoreListStore = Reflux.createStore({
             if (response.code === constants.resCode.COMMON) {
                 this.items = response.data;
                 this.trigger(this.items);
-            } else {
-                ui.tip({content: response.errors});
             }
         }.bind(this));
     },
-    onCreateItem(item, index){
+    onCreateItem(item, index, callback){
         $.post('/vo/manage/store/new', item, function (response) {
             if (response.code === constants.resCode.COMMON) {
                 this.items[index] = response.data;
                 this.trigger(this.items);
             } else {
-                console.log({content: response.errors});
+                callback(response.errors);
             }
 
         }.bind(this));
@@ -63,6 +61,8 @@ var StoreListStore = Reflux.createStore({
                 this.items[index] = response.data;
                 this.trigger(this.items);
                 callback();
+            } else {
+                callback(response.errors);
             }
         }.bind(this));
     },
@@ -193,7 +193,7 @@ ManageStore.ItemShow = React.createClass({
                         <button type="button" className="btn btn-danger"
                                 onClick={this.handleDelete.bind(this,store._id,index)}>删除
                         </button>
-                        <Link to="manage-food"className="btn btn-info" params={{storeId:store._id}}>套餐管理</Link>
+                        <Link to="manage-food" className="btn btn-info" params={{storeId:store._id}}>套餐管理</Link>
                     </div>
                 </td>
             </tr>
@@ -202,36 +202,82 @@ ManageStore.ItemShow = React.createClass({
 });
 
 ManageStore.ItemNew = React.createClass({
+    getInitialState: function () {
+        return {errors: {}};
+    },
     handleCreate: function (index) {
-        StoreListActions.createItem({
-            name: this.refs.name.getDOMNode().value,
-            mainProduct: this.refs.mainProduct.getDOMNode().value,
-            telephone: this.refs.telephone.getDOMNode().value,
-            address: this.refs.address.getDOMNode().value
-        }, index);
+        var model = {
+            name: this.refs.name.getDOMNode().value.trim(),
+            mainProduct: this.refs.mainProduct.getDOMNode().value.trim(),
+            telephone: this.refs.telephone.getDOMNode().value.trim(),
+            address: this.refs.address.getDOMNode().value.trim()
+        };
+
+        StoreListActions.createItem(model, index, function (errors) {
+            this.setState({errors: errors});
+        }.bind(this));
     },
     handleCancel: function (index) {
         StoreListActions.removeItem(index);
     },
+    handleFocus: function (type) {
+        delete this.state.errors[type];
+        this.forceUpdate();
+    },
     render: function () {
         var index = this.props.index;
+
+        var nameErr = this.state.errors.name;
+        var mainProductErr = this.state.errors.mainProduct;
+        var telephoneErr = this.state.errors.telephone;
+        var addressErr = this.state.errors.address;
+
         return (
             <tr className="active">
                 <td>
                     <div className="tip-hd">
-                        <div className="tooltip top" role="tooltip">
-                            <div className="tooltip-arrow"></div>
-                            <div className="tooltip-inner">
-                                Tooltip on the left
-                            </div>
-                        </div>
-                        <input type="text" className="form-control input-sm" maxLength="20" ref="name"/>
+                        {nameErr ? <ManageStore.Tip content={nameErr}/> : ''}
+                        <input
+                            type="text"
+                            className="form-control input-sm"
+                            maxLength="20"
+                            onFocus={this.handleFocus.bind(this,'name')}
+                            ref="name"/>
                     </div>
-
                 </td>
-                <td><input type="text" className="form-control input-sm" maxLength="20" ref="mainProduct"/></td>
-                <td><input type="text" className="form-control input-sm" maxLength="20" ref="telephone"/></td>
-                <td><input type="text" className="form-control input-sm" maxLength="20" ref="address"/></td>
+                <td>
+                    <div className="tip-hd">
+                        {mainProductErr ? <ManageStore.Tip content={mainProductErr}/> : ''}
+                        <input
+                            type="text"
+                            className="form-control input-sm"
+                            maxLength="20"
+                            onFocus={this.handleFocus.bind(this,'mainProduct')}
+                            ref="mainProduct"/>
+                    </div>
+                </td>
+                <td>
+                    <div className="tip-hd">
+                        {telephoneErr ? <ManageStore.Tip content={telephoneErr}/> : ''}
+                        <input
+                            type="text"
+                            className="form-control input-sm"
+                            maxLength="20"
+                            onFocus={this.handleFocus.bind(this,'telephone')}
+                            ref="telephone"/>
+                    </div>
+                </td>
+                <td>
+                    <div className="tip-hd">
+                        {addressErr ? <ManageStore.Tip content={addressErr}/> : ''}
+                        <input
+                            type="text"
+                            className="form-control input-sm"
+                            maxLength="20"
+                            onFocus={this.handleFocus.bind(this,'address')}
+                            ref="address"/>
+                    </div>
+                </td>
                 <td></td>
                 <td></td>
                 <td>
@@ -249,31 +295,99 @@ ManageStore.ItemNew = React.createClass({
     }
 });
 
+
+ManageStore.Tip = React.createClass({
+    render: function () {
+        return (
+            <div className="tooltip top">
+                <div className="tooltip-arrow"></div>
+                <div className="tooltip-inner">
+                    {this.props.content}
+                </div>
+            </div>
+        )
+    }
+});
+
+
 ManageStore.ItemEdit = React.createClass({
+    getInitialState: function () {
+        return {errors: {}};
+    },
     handleSave: function (id, index) {
-        StoreListActions.updateItem(id, {
-            name: this.refs.name.getDOMNode().value,
-            mainProduct: this.refs.mainProduct.getDOMNode().value,
-            telephone: this.refs.telephone.getDOMNode().value,
-            address: this.refs.address.getDOMNode().value
-        }, index, function () {
-            this.props.toggleEdit(false);
+        var model = {
+            name: this.refs.name.getDOMNode().value.trim(),
+            mainProduct: this.refs.mainProduct.getDOMNode().value.trim(),
+            telephone: this.refs.telephone.getDOMNode().value.trim(),
+            address: this.refs.address.getDOMNode().value.trim()
+        };
+
+        StoreListActions.updateItem(id, model, index, function (errors) {
+            errors ? this.setState({errors: errors}) : this.props.toggleEdit(false);
         }.bind(this));
+
     },
     handleCancel: function () {
         this.props.toggleEdit(false);
     },
+    handleFocus: function (type) {
+        delete this.state.errors[type];
+        this.forceUpdate();
+    },
     render: function () {
         var store = this.props.data;
         var index = this.props.index;
+
+        var nameErr = this.state.errors.name;
+        var mainProductErr = this.state.errors.mainProduct;
+        var telephoneErr = this.state.errors.telephone;
+        var addressErr = this.state.errors.address;
+
         return (
             <tr className="active">
-                <td><input type="text" className="form-control input-sm" defaultValue={store.name} ref="name"/></td>
-                <td><input type="text" className="form-control input-sm" defaultValue={store.mainProduct}
-                           ref="mainProduct"/></td>
-                <td><input type="text" className="form-control input-sm" defaultValue={store.telephone}
-                           ref="telephone"/></td>
-                <td><input type="text" className="form-control input-sm" defaultValue={store.address} ref="address"/>
+                <td>
+                    <div className="tip-hd">
+                        {nameErr ? <ManageStore.Tip content={nameErr}/> : ''}
+                        <input type="text"
+                               maxLength="20"
+                               className="form-control input-sm"
+                               defaultValue={store.name}
+                               onFocus={this.handleFocus.bind(this,'name')}
+                               ref="name"/>
+                    </div>
+                </td>
+                <td>
+                    <div className="tip-hd">
+                        {mainProductErr ? <ManageStore.Tip content={mainProductErr}/> : ''}
+                        <input type="text"
+                               maxLength="20"
+                               className="form-control input-sm"
+                               defaultValue={store.mainProduct}
+                               onFocus={this.handleFocus.bind(this,'mainProduct')}
+                               ref="mainProduct"/>
+                    </div>
+                </td>
+                <td>
+                    <div className="tip-hd">
+                        {telephoneErr ? <ManageStore.Tip content={telephoneErr}/> : ''}
+                        <input type="text"
+                               maxLength="20"
+                               className="form-control input-sm"
+                               onFocus={this.handleFocus.bind(this,'telephone')}
+                               defaultValue={store.telephone}
+                               ref="telephone"/>
+                    </div>
+                </td>
+                <td>
+                    <div className="tip-hd">
+                        {addressErr ? <ManageStore.Tip content={addressErr}/> : ''}
+                        <input type="text"
+                               maxLength="20"
+                               className="form-control input-sm"
+                               onFocus={this.handleFocus.bind(this,'address')}
+                               defaultValue={store.address}
+                               ref="address"/>
+                    </div>
                 </td>
                 <td>{moment(store.addTime).format('YYYY-MM-DD')}</td>
                 <td>{store.creater.realname}</td>

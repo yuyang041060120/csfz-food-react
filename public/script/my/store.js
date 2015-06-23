@@ -35,10 +35,12 @@ Store.StoreList = React.createClass({
 
 Store.StoreItem = React.createClass({
     render: function () {
-        var store=this.props.data;
+        var store = this.props.data;
         return (
             <li className="list-group-item store-item">
-                <h3 className="list-group-item-heading"><Link to="store-detail" params={{storeId:store._id}}>{store.name}</Link></h3>
+                <h3 className="list-group-item-heading">
+                    <Link to="store-detail" params={{storeId:store._id}}>{store.name}</Link>
+                </h3>
 
                 <p>
                     <span className="glyphicon glyphicon-shopping-cart"></span>{store.mainProduct}
