@@ -40,7 +40,7 @@ var SignIn = React.createClass({
         $.post('/vo/signin', model, function (response) {
             if (response.code === constants.resCode.COMMON) {
                 auth.signin(JSON.stringify(response.data));
-                this.transitionTo('index');
+                this.transitionTo(this.props.query.from ? this.props.query.from : 'index');
             } else {
                 this.setState({errors: response.errors, isSubmitting: false});
             }

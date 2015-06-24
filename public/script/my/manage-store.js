@@ -85,9 +85,10 @@ ManageStore.New = React.createClass({
         return (
             <div className="page-header">
                 <h3>店铺列表
-                    <button className="btn btn-primary pull-right" onClick={this.handleClick}>
-                        新增店铺
-                    </button>
+                    {auth.getUser().manage ?
+                        <button className="btn btn-primary pull-right" onClick={this.handleClick}>
+                            新增店铺
+                        </button> : ''}
                 </h3>
             </div>
         )
@@ -186,15 +187,16 @@ ManageStore.ItemShow = React.createClass({
                 <td>{moment(store.addTime).format('YYYY-MM-DD')}</td>
                 <td>{store.creater ? store.creater.realname : ''}</td>
                 <td>
-                    <div className="btn-group btn-group-xs">
-                        <button type="button" className="btn btn-primary"
-                                onClick={this.handleEdit}>修改
-                        </button>
-                        <button type="button" className="btn btn-danger"
-                                onClick={this.handleDelete.bind(this,store._id,index)}>删除
-                        </button>
-                        <Link to="manage-food" className="btn btn-info" params={{storeId:store._id}}>套餐管理</Link>
-                    </div>
+                    {auth.getUser().manage ?
+                        <div className="btn-group btn-group-xs">
+                            <button type="button" className="btn btn-primary"
+                                    onClick={this.handleEdit}>修改
+                            </button>
+                            <button type="button" className="btn btn-danger"
+                                    onClick={this.handleDelete.bind(this,store._id,index)}>删除
+                            </button>
+                            <Link to="manage-food" className="btn btn-info" params={{storeId:store._id}}>套餐管理</Link>
+                        </div> : '没有权限'}
                 </td>
             </tr>
         )

@@ -96,9 +96,10 @@ User.New = React.createClass({
         return (
             <div className="page-header">
                 <h3>通讯录
-                    <button className="btn btn-primary pull-right" onClick={this.handleClick}>
-                        新增用户
-                    </button>
+                    {auth.getUser().manage ?
+                        <button className="btn btn-primary pull-right" onClick={this.handleClick}>
+                            新增用户
+                        </button> : ''}
                 </h3>
             </div>
         )
@@ -232,7 +233,7 @@ User.ItemShow = React.createClass({
                 <td>{moment(user.updateTime).format('YYYY-MM-DD')}</td>
                 <td>{user.updater ? user.updater.realname : user.realname}</td>
                 <td>
-                    {auth.getUser()._id === user._id ? '' :
+                    {!auth.getUser().manage || auth.getUser()._id === user._id ? '没有权限' :
                         <div className="btn-group btn-group-xs">
                             <button type="button" className="btn btn-primary"
                                     onClick={this.handleEdit}>修改

@@ -91,9 +91,10 @@ ManageFood.New = React.createClass({
         return (
             <div className="page-header">
                 <h3>套餐列表
-                    <button className="btn btn-primary pull-right" onClick={this.handleClick}>
-                        新增套餐
-                    </button>
+                    {auth.getUser().manage ?
+                        <button className="btn btn-primary pull-right" onClick={this.handleClick}>
+                            新增套餐
+                        </button> : ''}
                 </h3>
             </div>
         )
@@ -209,14 +210,15 @@ ManageFood.ItemShow = React.createClass({
                 <td>{moment(food.updateTime).format('YYYY-MM-DD')}</td>
                 <td>{food.updater.realname}</td>
                 <td>
-                    <div className="btn-group btn-group-xs">
-                        <button type="button" className="btn btn-primary"
-                                onClick={this.handleEdit}>修改
-                        </button>
-                        <button type="button" className="btn btn-danger"
-                                onClick={this.handleDelete.bind(this,food._id,index)}>删除
-                        </button>
-                    </div>
+                    {auth.getUser().manage ?
+                        <div className="btn-group btn-group-xs">
+                            <button type="button" className="btn btn-primary"
+                                    onClick={this.handleEdit}>修改
+                            </button>
+                            <button type="button" className="btn btn-danger"
+                                    onClick={this.handleDelete.bind(this,food._id,index)}>删除
+                            </button>
+                        </div> : '没有权限'}
                 </td>
             </tr>
         )
