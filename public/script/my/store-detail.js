@@ -23,7 +23,7 @@ var StoreDetail = React.createClass({
 StoreDetail.FoodList = React.createClass({
     render: function () {
         return (
-            <div className="list-group">
+            <div className="row">
                 {this.props.data.map(function (item, index) {
                     return <StoreDetail.FoodItem data={item} key={index}/>
                 })}
@@ -42,19 +42,29 @@ StoreDetail.FoodItem = React.createClass({
     handleMouseLeave: function () {
         this.setState({showBtn: false});
     },
+    handleClick: function () {
+
+    },
     render: function () {
         var food = this.props.data;
-        var style = this.state.showBtn ? 'block' : 'none';
         return (
-            <a className="list-group-item store-item" onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave}>
-                <h4 className="list-group-item-heading">
-                    <span>{food.name}</span><span className="store-detail-price"> {food.price}元</span>
-                    <div className="pull-right" style={{display:style}}>
-                        <button className=" btn btn-primary btn-xs">点餐</button>
-                    </div>
+            <div className="col-lg-3">
+                <div className="thumbnail">
+                    <img src="image/demo.jpg"/>
 
-                </h4>
-            </a>
+                    <div className="caption">
+                        <h4>{food.name}</h4>
+
+                        <p className="store-price">￥{food.price}</p>
+
+                        <p>
+                            <button className="btn btn-primary btn-sm mg-rt">订餐</button>
+                            <button className="btn btn-default btn-sm">加入购物车</button>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
         )
     }
 });

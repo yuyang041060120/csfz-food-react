@@ -12,6 +12,7 @@ var Navbar = React.createClass({
                         <ul className="nav navbar-nav">
                             <li><Link to="index">首页</Link></li>
                             <li><Link to="store">点餐</Link></li>
+                            <li><Link to="my-order">我的</Link></li>
                             <li><Link to="manage-store">管理</Link></li>
                             <li><Link to="user">通讯录</Link></li>
                         </ul>

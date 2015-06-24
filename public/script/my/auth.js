@@ -29,7 +29,8 @@ var auth = {
         ];
 
         var urlLogin = [
-            /^\/manage\/?.*$/
+            /^\/manage\/?.*$/,
+            /^\/vo\/?.*$/
         ];
 
 

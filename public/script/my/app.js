@@ -30,6 +30,11 @@ var routes = (
             <Route name="manage-food" path=":storeId/food" handler={ManageFood}/>
             <Route name="user" path="user" handler={User}/>
         </Route>
+        <Route name="vo" path="vo" handler={Manage}>
+            <Route name="my-order" path="myorder" handler={VoMyOrder}/>
+            <Route name="history-order" path="hisorder" handler={VoHisOrder}/>
+            <Route name="message" path="message" handler={VoMessage}/>
+        </Route>
     </Route>
 );
 

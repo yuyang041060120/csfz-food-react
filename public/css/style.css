@@ -79,3 +79,7 @@ td {
     margin: 0 auto;
     width: 1400px;
 }
+
+.store-price{
+    color: darkred;
+}
