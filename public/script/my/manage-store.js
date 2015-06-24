@@ -184,7 +184,7 @@ ManageStore.ItemShow = React.createClass({
                 <td>{store.telephone}</td>
                 <td>{store.address}</td>
                 <td>{moment(store.addTime).format('YYYY-MM-DD')}</td>
-                <td>{store.creater.realname}</td>
+                <td>{store.creater ? store.creater.realname : ''}</td>
                 <td>
                     <div className="btn-group btn-group-xs">
                         <button type="button" className="btn btn-primary"
@@ -390,7 +390,7 @@ ManageStore.ItemEdit = React.createClass({
                     </div>
                 </td>
                 <td>{moment(store.addTime).format('YYYY-MM-DD')}</td>
-                <td>{store.creater.realname}</td>
+                <td>{store.creater ? store.creater.realname : ''}</td>
                 <td>
                     <div className="btn-group btn-group-xs">
                         <button type="button" className="btn btn-info"

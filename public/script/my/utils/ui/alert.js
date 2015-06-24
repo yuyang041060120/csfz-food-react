@@ -65,10 +65,6 @@ var Alert = {
         var left = ($(window).width() - $model.width()) / 2;
         var top = ($(window).height() - $model.height()) / 2;
 
-        console.log({
-            left: left,
-            top: top
-        })
         $model.css({
             left: left,
             top: top

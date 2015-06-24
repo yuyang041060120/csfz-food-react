@@ -24,11 +24,11 @@ var routes = (
         <Route name="store" path="store" handler={Store}/>
         <Route name="store-detail" path="store/:storeId" handler={StoreDetail}/>
         <Route name="sign-in" path="signin" handler={SignIn}/>
-        <Route name="sign-up" path="signup" handler={SignUp}/>
         <Route name="sign-out" path="signout" handler={SignOut}/>
         <Route name="manage" path="manage" handler={Manage}>
             <Route name="manage-store" path="store" handler={ManageStore}/>
             <Route name="manage-food" path=":storeId/food" handler={ManageFood}/>
+            <Route name="user" path="user" handler={User}/>
         </Route>
     </Route>
 );

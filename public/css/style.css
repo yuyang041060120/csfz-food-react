@@ -74,3 +74,8 @@ td {
     padding-top: 5px;
     background-color: #fefffd;
 }
+
+.user-container{
+    margin: 0 auto;
+    width: 1400px;
+}

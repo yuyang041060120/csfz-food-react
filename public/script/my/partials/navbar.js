@@ -13,6 +13,7 @@ var Navbar = React.createClass({
                             <li><Link to="index">首页</Link></li>
                             <li><Link to="store">点餐</Link></li>
                             <li><Link to="manage-store">管理</Link></li>
+                            <li><Link to="user">通讯录</Link></li>
                         </ul>
                         {auth.isLogin() ?
                             <ul className="nav navbar-nav navbar-right">
@@ -21,7 +22,6 @@ var Navbar = React.createClass({
                             </ul> :
                             <ul className="nav navbar-nav navbar-right">
                                 <li><Link to="sign-in">登录</Link></li>
-                                <li><Link to="sign-up">注册</Link></li>
                             </ul>
                         }
 
