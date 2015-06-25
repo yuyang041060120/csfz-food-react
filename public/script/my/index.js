@@ -1,26 +1,33 @@
+import React     from 'react';
+import Router    from 'react-router';
+import $         from 'jquery';
+import constants from './component/constants';
+import ui        from './component/ui';
+
+var Link = Router.Link;
 var cx = React.addons.classSet;
 
 var Index = React.createClass({
     render: function () {
         return (
             <div className="container">
-                <Index.CurrentBox />
-                <Index.HistoryBox />
+                <CurrentBox />
+                <HistoryBox />
             </div>
         )
     }
 });
 
-Index.CurrentBox = React.createClass({
+var CurrentBox = React.createClass({
     getInitialState: function () {
         return {list: {}};
     },
     handleClick: function () {
-        Alert.show({
-            title:'确定结束本次订餐？',
+        ui.alert({
+            title: '确定结束本次订餐？',
             onCertain: function () {
                 $.post('/vo/order/end', function (response) {
-                    if(response.code===constants.resCode.COMMON){
+                    if (response.code === constants.resCode.COMMON) {
                         location.reload();
                     }
                 });
@@ -40,7 +47,7 @@ Index.CurrentBox = React.createClass({
                 </h2>
 
                 <div className="index-current">
-                    <Index.StoreList data={this.state.list}/>
+                    <StoreList data={this.state.list}/>
                 </div>
             </div>
             :
@@ -48,7 +55,7 @@ Index.CurrentBox = React.createClass({
     }
 });
 
-Index.HistoryBox = React.createClass({
+var HistoryBox = React.createClass({
     getInitialState: function () {
         return {list: []};
     },
@@ -61,19 +68,19 @@ Index.HistoryBox = React.createClass({
         return (
             <div>
                 <h2>历史订单</h2>
-                <Index.HistoryList data={this.state.list}/>
+                <HistoryList data={this.state.list}/>
             </div>
         )
     }
 });
 
-Index.HistoryList = React.createClass({
+var HistoryList = React.createClass({
     render: function () {
         return (
             <ul className="list-group">
                 {
                     this.props.data.map(function (history, index) {
-                        return <Index.HistoryItem data={history} key={index}/>
+                        return <HistoryItem data={history} key={index}/>
                     })
                 }
             </ul>
@@ -83,7 +90,7 @@ Index.HistoryList = React.createClass({
 });
 
 
-Index.HistoryItem = React.createClass({
+var HistoryItem = React.createClass({
     getInitialState: function () {
         return {isShow: false};
     },
@@ -92,6 +99,7 @@ Index.HistoryItem = React.createClass({
     },
     render: function () {
         var history = this.props.data;
+
         var classes = cx({
             'glyphicon pull-right': true,
             'glyphicon-plus': !this.state.isShow,
@@ -103,21 +111,21 @@ Index.HistoryItem = React.createClass({
                     {moment(history.addTime).format('YYYY-MM-DD HH:mm')} {history.creater ? history.creater.realname : ''}
                     <span className={classes}></span>
                 </h5>
-                {this.state.isShow ? <Index.StoreList data={JSON.parse(history.content)}/> : ''}
+                {this.state.isShow ? <StoreList data={JSON.parse(history.content)}/> : ''}
             </li>
         )
     }
 });
 
 
-Index.StoreList = React.createClass({
+var StoreList = React.createClass({
     render: function () {
         var data = this.props.data;
         return (
             <div>
                 {
                     Object.keys(data).map(function (key, index) {
-                        return <Index.StoreItem data={data[key]} key={index}/>
+                        return <StoreItem data={data[key]} key={index}/>
                     })
                 }
             </div>
@@ -126,7 +134,7 @@ Index.StoreList = React.createClass({
 });
 
 
-Index.StoreItem = React.createClass({
+var StoreItem = React.createClass({
     render: function () {
         var data = this.props.data;
         return (
@@ -156,7 +164,7 @@ Index.StoreItem = React.createClass({
                     </thead>
                     <tbody>
                     {Object.keys(data.orders).map(function (key, index) {
-                        return <Index.OrderItem data={data.orders[key]} key={index}/>
+                        return <OrderItem data={data.orders[key]} key={index}/>
                     })}
                     </tbody>
                 </table>
@@ -166,7 +174,7 @@ Index.StoreItem = React.createClass({
 });
 
 
-Index.OrderItem = React.createClass({
+var OrderItem = React.createClass({
     render: function () {
         var item = this.props.data;
         var order = item.order;
@@ -187,3 +195,6 @@ Index.OrderItem = React.createClass({
         )
     }
 });
+
+
+export default Index;

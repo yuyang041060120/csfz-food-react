@@ -1,4 +1,4 @@
-var constants = {
+export default {
     resCode: {
         COMMON: 0,
         NOT_FOUND: 10000,

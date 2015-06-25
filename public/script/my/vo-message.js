@@ -1,15 +1,22 @@
+import React     from 'react';
+import Router    from 'react-router';
+import $         from 'jquery';
+import constants from './component/constants';
+
+var Link = Router.Link;
+
 var VoMessage = React.createClass({
     render: function () {
         return (
             <div className="container">
-                <VoMessage.Nav/>
-                <VoMessage.Box/>
+                <Nav/>
+                <Box/>
             </div>
         )
     }
 });
 
-VoMessage.Nav = React.createClass({
+var Nav = React.createClass({
     render: function () {
         return (
             <div className="col-lg-3 left-nav">
@@ -23,7 +30,7 @@ VoMessage.Nav = React.createClass({
     }
 });
 
-VoMessage.Box = React.createClass({
+var Box = React.createClass({
     getInitialState: function () {
         return {user: null, isEdit: false};
     },
@@ -51,15 +58,15 @@ VoMessage.Box = React.createClass({
         return (
             <div className="col-lg-6">
                 {!this.state.user ? '' : this.state.isEdit ?
-                    <VoMessage.Edit data={user} toggleEdit={this.handleEdit} handleSave={this.handleSave}/>
+                    <Edit data={user} toggleEdit={this.handleEdit} handleSave={this.handleSave}/>
                     :
-                    <VoMessage.Show data={user} toggleEdit={this.handleEdit}/>}
+                    <Show data={user} toggleEdit={this.handleEdit}/>}
             </div>
         )
     }
 });
 
-VoMessage.Show = React.createClass({
+var Show = React.createClass({
     render: function () {
         var user = this.props.data;
 
@@ -111,7 +118,7 @@ VoMessage.Show = React.createClass({
 });
 
 
-VoMessage.Edit = React.createClass({
+var Edit = React.createClass({
     getInitialState: function () {
         return {errors: {}};
     },
@@ -168,7 +175,7 @@ VoMessage.Edit = React.createClass({
                         <td>密码</td>
                         <td>
                             <div className="tip-hd">
-                                {passwordErr ? <VoMessage.Tip content={passwordErr}/> : ''}
+                                {passwordErr ? <Tip content={passwordErr}/> : ''}
                                 <input
                                     type="password"
                                     className="form-control input-sm"
@@ -183,7 +190,7 @@ VoMessage.Edit = React.createClass({
                         <td>真实姓名</td>
                         <td>
                             <div className="tip-hd">
-                                {realnameErr ? <VoMessage.Tip content={realnameErr}/> : ''}
+                                {realnameErr ? <Tip content={realnameErr}/> : ''}
                                 <input
                                     type="text"
                                     className="form-control input-sm"
@@ -198,7 +205,7 @@ VoMessage.Edit = React.createClass({
                         <td>电话</td>
                         <td>
                             <div className="tip-hd">
-                                {telephoneErr ? <VoMessage.Tip content={telephoneErr}/> : ''}
+                                {telephoneErr ? <Tip content={telephoneErr}/> : ''}
                                 <input
                                     type="text"
                                     className="form-control input-sm"
@@ -213,7 +220,7 @@ VoMessage.Edit = React.createClass({
                         <td>手机</td>
                         <td>
                             <div className="tip-hd">
-                                {mobileErr ? <VoMessage.Tip content={mobileErr}/> : ''}
+                                {mobileErr ? <Tip content={mobileErr}/> : ''}
                                 <input
                                     type="text"
                                     className="form-control input-sm"
@@ -243,33 +250,7 @@ VoMessage.Edit = React.createClass({
     }
 });
 
-VoMessage.Input = React.createClass({
-    handleChange: function (e) {
-        this.setValue(e.currentTarget.value);
-    },
-    render: function () {
-        var errorMsg = this.isValid() ? '' : this.getErrorMsg();
-        var classes = cx({
-            'form-group': true,
-            'has-error': this.isInvalid()
-        });
-        return (
-            <div className={classes}>
-                <label className="col-lg-2 control-label">{this.props.label}</label>
-
-                <div className="col-sm-10">
-                    {this.props.value ?
-                        <input name={this.props.name} className="form-control" type={this.props.type}
-                               onChange={this.handleChange} defaultValue={this.props.value}/>
-                        : ''}
-                    <p className="form-error">{errorMsg}</p>
-                </div>
-            </div>
-        )
-    }
-});
-
-VoMessage.Tip = React.createClass({
+var Tip = React.createClass({
     render: function () {
         return (
             <div className="tooltip top">
@@ -281,3 +262,5 @@ VoMessage.Tip = React.createClass({
         )
     }
 });
+
+export default VoMessage;

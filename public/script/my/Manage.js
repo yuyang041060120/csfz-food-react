@@ -1,4 +1,8 @@
-var RouteHandler = ReactRouter.RouteHandler;
+import React  from 'react';
+import Router from 'react-router';
+import auth   from './auth';
+
+var RouteHandler = Router.RouteHandler;
 
 var Manage = React.createClass({
     statics: {
@@ -8,3 +12,5 @@ var Manage = React.createClass({
         return <RouteHandler />
     }
 });
+
+export default Manage;

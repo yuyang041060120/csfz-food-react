@@ -1,16 +1,19 @@
+import React from 'react';
+import $     from 'jquery';
+
 var AlertComponent = React.createClass({
     handleClose: function () {
         if (this.props.onClose) {
-            this.props.onClose();
+            this.props.onClose(close);
         } else {
-            Alert.close();
+            close();
         }
     },
     handleCertain: function () {
         if (this.props.onCertain) {
-            this.props.onCertain();
+            this.props.onCertain(close);
         } else {
-            Alert.close();
+            close();
         }
     },
     render: function () {
@@ -40,34 +43,37 @@ var AlertComponent = React.createClass({
     }
 });
 
-var Alert = {
-    instant: null,
-    show: function (options) {
-        if (!this.instant) {
-            this.instant = document.createElement('div');
-            document.body.appendChild(this.instant);
-        }
+var instant;
 
-        React.render(<AlertComponent onClose={options.onClose} onCertain={options.onCertain}
-                                     title={options.title}/>, this.instant);
+function close() {
+    React.unmountComponentAtNode(instant);
+}
 
-        this.calcuPosition();
-        var self=this;
-        $(window).off('resize.alert').on('resize.alert', function () {
-            self.calcuPosition();
-        });
-    },
-    close: function () {
-        React.unmountComponentAtNode(this.instant);
-    },
-    calcuPosition: function () {
-        var $model=$(this.instant).find('.dialog');
-        var left = ($(window).width() - $model.width()) / 2;
-        var top = ($(window).height() - $model.height()) / 2;
-
-        $model.css({
-            left: left,
-            top: top
-        });
+function alert(options) {
+    if (!instant) {
+        instant = document.createElement('div');
+        document.body.appendChild(instant);
     }
-};
+
+    React.render(<AlertComponent onClose={options.onClose} onCertain={options.onCertain}
+                                 title={options.title}/>, instant);
+
+    calcuPosition();
+
+    $(window).off('resize.alert').on('resize.alert', function () {
+        calcuPosition();
+    });
+}
+
+function calcuPosition() {
+    var $model = $(instant).find('.dialog');
+    var left = ($(window).width() - $model.width()) / 2;
+    var top = ($(window).height() - $model.height()) / 2;
+
+    $model.css({
+        left: left,
+        top: top
+    });
+}
+
+export default alert;

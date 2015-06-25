@@ -2,7 +2,7 @@ var webpack = require('webpack');
 
 module.exports = {
     context: __dirname + '/public/script',
-    entry: './my/index',
+    entry: './my/app',
     output: {
         path: __dirname + '/public/build',
         filename: 'bundle.js'
@@ -13,11 +13,11 @@ module.exports = {
             __PRERELEASE__: JSON.stringify(JSON.parse(process.env.BUILD_PRERELEASE || 'false'))
         })
     ],
-    resolve: {
-        alias: {
-            'react': '../lib/react',
-            'react-router': '../lib/ReactRouter'
-        }
+    externals: {
+        'react': 'React',
+        'react-router': 'ReactRouter',
+        'jquery': 'jQuery',
+        'reflux': 'Reflux'
     },
     module: {
         loaders: [

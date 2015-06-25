@@ -1,4 +1,8 @@
-var Link = ReactRouter.Link;
+import React  from 'react';
+import Router from 'react-router';
+import auth   from '../auth';
+
+var Link = Router.Link;
 
 var Navbar = React.createClass({
     render: function () {
@@ -32,3 +36,5 @@ var Navbar = React.createClass({
         )
     }
 });
+
+export default Navbar;

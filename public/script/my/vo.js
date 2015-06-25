@@ -1,4 +1,9 @@
-var RouteHandler = ReactRouter.RouteHandler;
+import React  from 'react';
+import Router from 'react-router';
+import $      from 'jquery';
+import auth   from './auth';
+
+var RouteHandler = Router.RouteHandler;
 
 var Vo = React.createClass({
     statics: {
@@ -8,3 +13,6 @@ var Vo = React.createClass({
         return <RouteHandler />
     }
 });
+
+
+export default Vo;

@@ -49,3 +49,5 @@ var auth = {
         callback();
     }
 };
+
+export default auth;

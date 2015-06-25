@@ -1,15 +1,23 @@
+import React     from 'react';
+import Router    from 'react-router';
+import $         from 'jquery';
+import constants from './component/constants';
+import ui        from './component/ui';
+
+var Link = Router.Link;
+
 var VoMyOrder = React.createClass({
     render: function () {
         return (
             <div className="container">
-                <VoMyOrder.Nav />
-                <VoMyOrder.List />
+                <Nav />
+                <List />
             </div>
         )
     }
 });
 
-VoMyOrder.Nav = React.createClass({
+var Nav = React.createClass({
     render: function () {
         return (
             <div className="col-lg-3 left-nav">
@@ -23,7 +31,7 @@ VoMyOrder.Nav = React.createClass({
     }
 });
 
-VoMyOrder.List = React.createClass({
+var List = React.createClass({
     getInitialState: function () {
         return {list: []};
     },
@@ -37,7 +45,7 @@ VoMyOrder.List = React.createClass({
             if (response.code === constants.resCode.COMMON) {
                 this.state.list.splice(index, 1);
                 this.forceUpdate();
-                Tip.show({
+                ui.tip({
                     content: '取消成功'
                 });
             }
@@ -67,7 +75,7 @@ VoMyOrder.List = React.createClass({
                         </thead>
                         <tbody>
                         {this.state.list.map(function (item, index) {
-                            return <VoMyOrder.Item data={item} key={index} handleDelete={this.handleDelete}/>
+                            return <Item data={item} key={index} handleDelete={this.handleDelete}/>
                         }.bind(this))}
                         </tbody>
                     </table>
@@ -80,7 +88,7 @@ VoMyOrder.List = React.createClass({
     }
 });
 
-VoMyOrder.Item = React.createClass({
+var Item = React.createClass({
     handleCancel: function () {
         this.props.handleDelete(this.props.data._id, this.props.index);
     },
@@ -102,3 +110,5 @@ VoMyOrder.Item = React.createClass({
         )
     }
 });
+
+export default VoMyOrder;

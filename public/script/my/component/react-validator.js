@@ -178,3 +178,5 @@ Validator.Form = React.createClass({
         }, null, this.registerInputs(this.props.children));
     }
 });
+
+export default Validator;

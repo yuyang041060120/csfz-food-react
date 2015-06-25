@@ -1,6 +1,13 @@
+import React     from 'react';
+import $         from 'jquery';
+import Reflux    from 'reflux';
+import auth      from './auth';
+import constants from './component/constants';
+import ui        from './component/ui';
+
 var storeId;
 
-var FoodListActions = Reflux.createActions([
+var ListActions = Reflux.createActions([
     'getAll',
     'addItem',
     'removeItem',
@@ -9,9 +16,10 @@ var FoodListActions = Reflux.createActions([
     'deleteItem'
 ]);
 
-var FoodListStore = Reflux.createStore({
+
+var ListStore = Reflux.createStore({
     items: [],
-    listenables: FoodListActions,
+    listenables: ListActions,
     onAddItem(){
         if (this.items.length === 0 || this.items[0]._id) {
             this.items.unshift({
@@ -75,17 +83,17 @@ var ManageFood = React.createClass({
     render: function () {
         return (
             <div className="container">
-                <ManageFood.New />
-                <ManageFood.List/>
+                <New />
+                <List/>
             </div>
         )
     }
 });
 
 
-ManageFood.New = React.createClass({
+var New = React.createClass({
     handleClick: function () {
-        FoodListActions.addItem();
+        ListActions.addItem();
     },
     render: function () {
         return (
@@ -101,13 +109,13 @@ ManageFood.New = React.createClass({
     }
 });
 
-ManageFood.List = React.createClass({
-    mixins: [Reflux.connect(FoodListStore, 'list')],
+var List = React.createClass({
+    mixins: [Reflux.connect(ListStore, 'list')],
     getInitialState: function () {
         return {list: []};
     },
     componentDidMount: function () {
-        FoodListActions.getAll();
+        ListActions.getAll();
     },
     render: function () {
         return (
@@ -134,7 +142,7 @@ ManageFood.List = React.createClass({
                 </thead>
                 <tbody>
                 {this.state.list.map(function (item, index) {
-                    return <ManageFood.Item data={item} key={index} index={index}/>
+                    return <Item data={item} key={index} index={index}/>
                 })}
                 </tbody>
             </table>
@@ -142,7 +150,7 @@ ManageFood.List = React.createClass({
     }
 });
 
-ManageFood.Item = React.createClass({
+var Item = React.createClass({
     getInitialState: function () {
         return {isEdit: false};
     },
@@ -156,12 +164,12 @@ ManageFood.Item = React.createClass({
 
         if (food._id) {
             if (this.state.isEdit) {
-                render = <ManageFood.ItemEdit index={index} data={food} toggleEdit={this.toggleEdit}/>;
+                render = <ItemEdit index={index} data={food} toggleEdit={this.toggleEdit}/>;
             } else {
-                render = <ManageFood.ItemShow index={index} data={food} toggleEdit={this.toggleEdit}/>;
+                render = <ItemShow index={index} data={food} toggleEdit={this.toggleEdit}/>;
             }
         } else {
-            render = <ManageFood.ItemNew data={food} index={index}/>;
+            render = <ItemNew data={food} index={index}/>;
         }
 
         return render;
@@ -169,7 +177,7 @@ ManageFood.Item = React.createClass({
 });
 
 
-ManageFood.Tip = React.createClass({
+var Tip = React.createClass({
     render: function () {
         return (
             <div className="tooltip top">
@@ -182,16 +190,16 @@ ManageFood.Tip = React.createClass({
     }
 });
 
-ManageFood.ItemShow = React.createClass({
+var ItemShow = React.createClass({
     handleEdit: function () {
         this.props.toggleEdit(true);
     },
     handleDelete: function (id, index) {
-        Alert.show({
+        ui.alert({
             title: '确定删除该套餐？',
-            onCertain: function () {
-                FoodListActions.deleteItem(id, index, function () {
-                    Alert.close();
+            onCertain: function (close) {
+                ListActions.deleteItem(id, index, function () {
+                    close();
                 });
             }
         });
@@ -225,7 +233,7 @@ ManageFood.ItemShow = React.createClass({
     }
 });
 
-ManageFood.ItemNew = React.createClass({
+var ItemNew = React.createClass({
     getInitialState: function () {
         return {errors: {}};
     },
@@ -235,12 +243,12 @@ ManageFood.ItemNew = React.createClass({
             price: this.refs.price.getDOMNode().value.trim()
         };
 
-        FoodListActions.createItem(model, index, function (errors) {
+        ListActions.createItem(model, index, function (errors) {
             this.setState({errors: errors});
         }.bind(this));
     },
     handleCancel: function (index) {
-        FoodListActions.removeItem(index);
+        ListActions.removeItem(index);
     },
     handleFocus: function (type) {
         delete this.state.errors[type];
@@ -256,7 +264,7 @@ ManageFood.ItemNew = React.createClass({
             <tr className="active">
                 <td>
                     <div className="tip-hd">
-                        {nameErr ? <ManageStore.Tip content={nameErr}/> : ''}
+                        {nameErr ? <Tip content={nameErr}/> : ''}
                         <input
                             type="text"
                             className="form-control input-sm"
@@ -267,7 +275,7 @@ ManageFood.ItemNew = React.createClass({
                 </td>
                 <td>
                     <div className="tip-hd">
-                        {priceErr ? <ManageStore.Tip content={priceErr}/> : ''}
+                        {priceErr ? <Tip content={priceErr}/> : ''}
                         <input
                             type="text"
                             className="form-control input-sm"
@@ -296,7 +304,7 @@ ManageFood.ItemNew = React.createClass({
     }
 });
 
-ManageFood.ItemEdit = React.createClass({
+var ItemEdit = React.createClass({
     getInitialState: function () {
         return {errors: {}};
     },
@@ -306,7 +314,7 @@ ManageFood.ItemEdit = React.createClass({
             price: this.refs.price.getDOMNode().value.trim()
         };
 
-        FoodListActions.updateItem(id, model, index, function (errors) {
+        ListActions.updateItem(id, model, index, function (errors) {
             errors ? this.setState({errors: errors}) : this.props.toggleEdit(false);
         }.bind(this));
     },
@@ -328,7 +336,7 @@ ManageFood.ItemEdit = React.createClass({
             <tr className="active">
                 <td>
                     <div className="tip-hd">
-                        {nameErr ? <ManageStore.Tip content={nameErr}/> : ''}
+                        {nameErr ? <Tip content={nameErr}/> : ''}
                         <input
                             type="text"
                             className="form-control input-sm"
@@ -339,7 +347,7 @@ ManageFood.ItemEdit = React.createClass({
                 </td>
                 <td>
                     <div className="tip-hd">
-                        {priceErr ? <ManageStore.Tip content={priceErr}/> : ''}
+                        {priceErr ? <Tip content={priceErr}/> : ''}
                         <input
                             type="text"
                             className="form-control input-sm"
@@ -367,3 +375,5 @@ ManageFood.ItemEdit = React.createClass({
         )
     }
 });
+
+export default ManageFood;

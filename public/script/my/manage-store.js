@@ -1,15 +1,25 @@
+import React     from 'react';
+import Router    from 'react-router';
+import $         from 'jquery';
+import Reflux    from 'reflux';
+import auth      from './auth';
+import constants from './component/constants';
+import ui        from './component/ui';
+
+var Link = Router.Link;
+
 var ManageStore = React.createClass({
     render: function () {
         return (
             <div className="container">
-                <ManageStore.New />
-                <ManageStore.List />
+                <New />
+                <List />
             </div>
         )
     }
 });
 
-var StoreListActions = Reflux.createActions([
+var ListActions = Reflux.createActions([
     'getAll',
     'addItem',
     'removeItem',
@@ -18,9 +28,9 @@ var StoreListActions = Reflux.createActions([
     'deleteItem'
 ]);
 
-var StoreListStore = Reflux.createStore({
+var ListStore = Reflux.createStore({
     items: [],
-    listenables: StoreListActions,
+    listenables: ListActions,
     onAddItem(){
         if (this.items.length === 0 || this.items[0]._id) {
             this.items.unshift({
@@ -77,9 +87,9 @@ var StoreListStore = Reflux.createStore({
     }
 });
 
-ManageStore.New = React.createClass({
+var New = React.createClass({
     handleClick: function () {
-        StoreListActions.addItem();
+        ListActions.addItem();
     },
     render: function () {
         return (
@@ -95,13 +105,13 @@ ManageStore.New = React.createClass({
     }
 });
 
-ManageStore.List = React.createClass({
-    mixins: [Reflux.connect(StoreListStore, 'list')],
+var List = React.createClass({
+    mixins: [Reflux.connect(ListStore, 'list')],
     getInitialState: function () {
         return {list: []};
     },
     componentDidMount: function () {
-        StoreListActions.getAll();
+        ListActions.getAll();
     },
     render: function () {
         return (
@@ -126,7 +136,7 @@ ManageStore.List = React.createClass({
                 </thead>
                 <tbody>
                 {this.state.list.map(function (item, index) {
-                    return <ManageStore.Item data={item} key={index} index={index}/>
+                    return <Item data={item} key={index} index={index}/>
                 })}
                 </tbody>
             </table>
@@ -134,7 +144,7 @@ ManageStore.List = React.createClass({
     }
 });
 
-ManageStore.Item = React.createClass({
+var Item = React.createClass({
     getInitialState: function () {
         return {isEdit: false};
     },
@@ -148,28 +158,28 @@ ManageStore.Item = React.createClass({
 
         if (store._id) {
             if (this.state.isEdit) {
-                render = <ManageStore.ItemEdit index={index} data={store} toggleEdit={this.toggleEdit}/>;
+                render = <ItemEdit index={index} data={store} toggleEdit={this.toggleEdit}/>;
             } else {
-                render = <ManageStore.ItemShow index={index} data={store} toggleEdit={this.toggleEdit}/>;
+                render = <ItemShow index={index} data={store} toggleEdit={this.toggleEdit}/>;
             }
         } else {
-            render = <ManageStore.ItemNew data={store} index={index}/>;
+            render = <ItemNew data={store} index={index}/>;
         }
 
         return render;
     }
 });
 
-ManageStore.ItemShow = React.createClass({
+var ItemShow = React.createClass({
     handleEdit: function () {
         this.props.toggleEdit(true);
     },
     handleDelete: function (id, index) {
-        Alert.show({
+        ui.alert({
             title: '确定删除该店铺？',
-            onCertain: function () {
-                StoreListActions.deleteItem(id, index, function () {
-                    Alert.close();
+            onCertain: function (close) {
+                ListActions.deleteItem(id, index, function () {
+                    close();
                 });
             }
         });
@@ -203,7 +213,7 @@ ManageStore.ItemShow = React.createClass({
     }
 });
 
-ManageStore.ItemNew = React.createClass({
+var ItemNew = React.createClass({
     getInitialState: function () {
         return {errors: {}};
     },
@@ -215,12 +225,12 @@ ManageStore.ItemNew = React.createClass({
             address: this.refs.address.getDOMNode().value.trim()
         };
 
-        StoreListActions.createItem(model, index, function (errors) {
+        ListActions.createItem(model, index, function (errors) {
             this.setState({errors: errors});
         }.bind(this));
     },
     handleCancel: function (index) {
-        StoreListActions.removeItem(index);
+        ListActions.removeItem(index);
     },
     handleFocus: function (type) {
         delete this.state.errors[type];
@@ -238,7 +248,7 @@ ManageStore.ItemNew = React.createClass({
             <tr className="active">
                 <td>
                     <div className="tip-hd">
-                        {nameErr ? <ManageStore.Tip content={nameErr}/> : ''}
+                        {nameErr ? <Tip content={nameErr}/> : ''}
                         <input
                             type="text"
                             className="form-control input-sm"
@@ -249,7 +259,7 @@ ManageStore.ItemNew = React.createClass({
                 </td>
                 <td>
                     <div className="tip-hd">
-                        {mainProductErr ? <ManageStore.Tip content={mainProductErr}/> : ''}
+                        {mainProductErr ? <Tip content={mainProductErr}/> : ''}
                         <input
                             type="text"
                             className="form-control input-sm"
@@ -260,7 +270,7 @@ ManageStore.ItemNew = React.createClass({
                 </td>
                 <td>
                     <div className="tip-hd">
-                        {telephoneErr ? <ManageStore.Tip content={telephoneErr}/> : ''}
+                        {telephoneErr ? <Tip content={telephoneErr}/> : ''}
                         <input
                             type="text"
                             className="form-control input-sm"
@@ -271,7 +281,7 @@ ManageStore.ItemNew = React.createClass({
                 </td>
                 <td>
                     <div className="tip-hd">
-                        {addressErr ? <ManageStore.Tip content={addressErr}/> : ''}
+                        {addressErr ? <Tip content={addressErr}/> : ''}
                         <input
                             type="text"
                             className="form-control input-sm"
@@ -298,7 +308,7 @@ ManageStore.ItemNew = React.createClass({
 });
 
 
-ManageStore.Tip = React.createClass({
+var Tip = React.createClass({
     render: function () {
         return (
             <div className="tooltip top">
@@ -312,7 +322,7 @@ ManageStore.Tip = React.createClass({
 });
 
 
-ManageStore.ItemEdit = React.createClass({
+var ItemEdit = React.createClass({
     getInitialState: function () {
         return {errors: {}};
     },
@@ -324,7 +334,7 @@ ManageStore.ItemEdit = React.createClass({
             address: this.refs.address.getDOMNode().value.trim()
         };
 
-        StoreListActions.updateItem(id, model, index, function (errors) {
+        ListActions.updateItem(id, model, index, function (errors) {
             errors ? this.setState({errors: errors}) : this.props.toggleEdit(false);
         }.bind(this));
 
@@ -349,7 +359,7 @@ ManageStore.ItemEdit = React.createClass({
             <tr className="active">
                 <td>
                     <div className="tip-hd">
-                        {nameErr ? <ManageStore.Tip content={nameErr}/> : ''}
+                        {nameErr ? <Tip content={nameErr}/> : ''}
                         <input type="text"
                                maxLength="20"
                                className="form-control input-sm"
@@ -360,7 +370,7 @@ ManageStore.ItemEdit = React.createClass({
                 </td>
                 <td>
                     <div className="tip-hd">
-                        {mainProductErr ? <ManageStore.Tip content={mainProductErr}/> : ''}
+                        {mainProductErr ? <Tip content={mainProductErr}/> : ''}
                         <input type="text"
                                maxLength="20"
                                className="form-control input-sm"
@@ -371,7 +381,7 @@ ManageStore.ItemEdit = React.createClass({
                 </td>
                 <td>
                     <div className="tip-hd">
-                        {telephoneErr ? <ManageStore.Tip content={telephoneErr}/> : ''}
+                        {telephoneErr ? <Tip content={telephoneErr}/> : ''}
                         <input type="text"
                                maxLength="20"
                                className="form-control input-sm"
@@ -382,7 +392,7 @@ ManageStore.ItemEdit = React.createClass({
                 </td>
                 <td>
                     <div className="tip-hd">
-                        {addressErr ? <ManageStore.Tip content={addressErr}/> : ''}
+                        {addressErr ? <Tip content={addressErr}/> : ''}
                         <input type="text"
                                maxLength="20"
                                className="form-control input-sm"
@@ -407,3 +417,6 @@ ManageStore.ItemEdit = React.createClass({
         )
     }
 });
+
+
+export default ManageStore;

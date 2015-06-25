@@ -1,15 +1,21 @@
+import React  from 'react';
+import Router from 'react-router';
+import $      from 'jquery';
+
+var Link = Router.Link;
+
 var VoHisOrder = React.createClass({
     render: function () {
         return (
             <div className="container">
-                <VoHisOrder.Nav />
-                <VoHisOrder.List />
+                <Nav />
+                <List />
             </div>
         )
     }
 });
 
-VoHisOrder.Nav = React.createClass({
+var Nav = React.createClass({
     render: function () {
         return (
             <div className="col-lg-3 left-nav">
@@ -23,7 +29,7 @@ VoHisOrder.Nav = React.createClass({
     }
 });
 
-VoHisOrder.List = React.createClass({
+var List = React.createClass({
     getInitialState: function () {
         return {list: []};
     },
@@ -53,7 +59,7 @@ VoHisOrder.List = React.createClass({
                         </thead>
                         <tbody>
                         {this.state.list.map(function (item, index) {
-                            return <VoHisOrder.Item data={item} key={index} handleDelete={this.handleDelete}/>
+                            return <Item data={item} key={index} handleDelete={this.handleDelete}/>
                         }.bind(this))}
                         </tbody>
                     </table>
@@ -65,18 +71,20 @@ VoHisOrder.List = React.createClass({
     }
 });
 
-VoHisOrder.Item = React.createClass({
+var Item = React.createClass({
     render: function () {
         var order = this.props.data;
 
         return (
             <tr>
-                <td>{order.food.name}</td>
-                <td>{order.food.price}</td>
+                <td>{order.food ? order.food.name : ''}</td>
+                <td>{order.food ? order.food.price : ''}</td>
                 <td>{order.count}</td>
-                <td>{order.store.name}</td>
+                <td>{order.store?order.store.name:''}</td>
                 <td>{moment(order.addTime).format('YYYY-MM-DD HH:mm')}</td>
             </tr>
         )
     }
 });
+
+export default VoHisOrder;

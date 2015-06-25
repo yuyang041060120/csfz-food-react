@@ -1,7 +1,14 @@
+import React     from 'react';
+import Router    from 'react-router';
+import $         from 'jquery';
+import auth      from './auth';
+import Validator from './component/react-validator';
+import constants from './component/constants';
+
 var cx = React.addons.classSet;
 
 var SignIn = React.createClass({
-    mixins: [ReactRouter.Navigation],
+    mixins: [Router.Navigation],
     getInitialState: function () {
         return {
             isSubmitting: false,
@@ -97,3 +104,5 @@ var SigninInput = React.createClass({
         )
     }
 });
+
+export default SignIn;

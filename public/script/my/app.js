@@ -1,12 +1,27 @@
-var Route = ReactRouter.Route;
-var RouteHandler = ReactRouter.RouteHandler;
-var DefaultRoute = ReactRouter.DefaultRoute;
+import React       from 'react';
+import Router      from 'react-router';
+import Index       from './index';
+import Navbar      from './partials/navbar';
+import Store       from './store';
+import StoreDetail from './store-detail';
+import SignIn      from './sign-in';
+import SignOut     from './sign-out';
+import Manage      from './manage';
+import ManageStore from './manage-store';
+import ManageFood  from './manage-food';
+import ManageUser  from './manage-user';
+
+import Vo          from './vo.js';
+import VoMyOrder   from './vo-myorder';
+import VoHisOrder  from './vo-hisorder';
+import VoMessage   from './vo-message';
+
+var Route = Router.Route;
+var RouteHandler = Router.RouteHandler;
+var DefaultRoute = Router.DefaultRoute;
 
 
 var App = React.createClass({
-    componentDidMount: function () {
-
-    },
     render: function () {
         return (
             <div>
@@ -30,7 +45,7 @@ var routes = (
             <Route name="manage-food" path=":storeId/food" handler={ManageFood}/>
             <Route name="user" path="user" handler={ManageUser}/>
         </Route>
-        <Route name="vo" path="vo" handler={Manage}>
+        <Route name="vo" path="vo" handler={Vo}>
             <Route name="my-order" path="myorder" handler={VoMyOrder}/>
             <Route name="history-order" path="hisorder" handler={VoHisOrder}/>
             <Route name="message" path="message" handler={VoMessage}/>
@@ -39,6 +54,6 @@ var routes = (
 );
 
 
-ReactRouter.run(routes, ReactRouter.HashLocation, function (Root) {
+Router.run(routes, Router.HashLocation, function (Root) {
     React.render(<Root/>, document.body);
 });

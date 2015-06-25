@@ -1,3 +1,9 @@
+import React  from 'react';
+import Router from 'react-router';
+import $      from 'jquery';
+
+var Link = Router.Link;
+
 var Store = React.createClass({
     getInitialState: function () {
         return {list: []};
@@ -13,19 +19,19 @@ var Store = React.createClass({
                 <div className="page-header">
                     <h3>店铺列表</h3>
                 </div>
-                <Store.StoreList data={this.state.list}/>
+                <StoreList data={this.state.list}/>
             </div>
         )
     }
 });
 
 
-Store.StoreList = React.createClass({
+var StoreList = React.createClass({
     render: function () {
         return (
             <ul className="list-group">
                 {this.props.data.map(function (item) {
-                    return <Store.StoreItem data={item} key={item._id}/>
+                    return <StoreItem data={item} key={item._id}/>
                 })}
             </ul>
         )
@@ -33,7 +39,7 @@ Store.StoreList = React.createClass({
 });
 
 
-Store.StoreItem = React.createClass({
+var StoreItem = React.createClass({
     render: function () {
         var store = this.props.data;
         return (
@@ -50,3 +56,5 @@ Store.StoreItem = React.createClass({
         )
     }
 });
+
+export default Store;

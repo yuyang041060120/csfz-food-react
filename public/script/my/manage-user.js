@@ -1,16 +1,23 @@
+import React     from 'react';
+import $         from 'jquery';
+import Reflux    from 'reflux';
+import auth      from './auth';
+import constants from './component/constants';
+import ui        from './component/ui';
+
 var ManageUser = React.createClass({
     render: function () {
         return (
             <div className="user-container">
-                <ManageUser.New />
-                <ManageUser.List />
+                <New />
+                <List />
             </div>
         )
     }
 });
 
 
-var UserListActions = Reflux.createActions([
+var ListActions = Reflux.createActions([
     'getAll',
     'addItem',
     'removeItem',
@@ -20,9 +27,9 @@ var UserListActions = Reflux.createActions([
     'toggleManage'
 ]);
 
-var UserListStore = Reflux.createStore({
+var ListStore = Reflux.createStore({
     items: [],
-    listenables: UserListActions,
+    listenables: ListActions,
     onAddItem(){
         if (this.items.length === 0 || this.items[0]._id) {
             this.items.unshift({
@@ -88,9 +95,9 @@ var UserListStore = Reflux.createStore({
     }
 });
 
-ManageUser.New = React.createClass({
+var New = React.createClass({
     handleClick: function () {
-        UserListActions.addItem();
+        ListActions.addItem();
     },
     render: function () {
         return (
@@ -106,13 +113,13 @@ ManageUser.New = React.createClass({
     }
 });
 
-ManageUser.List = React.createClass({
-    mixins: [Reflux.connect(UserListStore, 'list')],
+var List = React.createClass({
+    mixins: [Reflux.connect(ListStore, 'list')],
     getInitialState: function () {
         return {list: []};
     },
     componentDidMount: function () {
-        UserListActions.getAll();
+        ListActions.getAll();
     },
     render: function () {
         return (
@@ -148,7 +155,7 @@ ManageUser.List = React.createClass({
                 </thead>
                 <tbody>
                 {this.state.list.map(function (item, index) {
-                    return <ManageUser.Item data={item} key={index} index={index}/>
+                    return <Item data={item} key={index} index={index}/>
                 })}
                 </tbody>
             </table>
@@ -157,7 +164,7 @@ ManageUser.List = React.createClass({
 });
 
 
-ManageUser.Item = React.createClass({
+var Item = React.createClass({
     getInitialState: function () {
         return {isEdit: false};
     },
@@ -171,12 +178,12 @@ ManageUser.Item = React.createClass({
 
         if (user._id) {
             if (this.state.isEdit) {
-                render = <ManageUser.ItemEdit index={index} data={user} toggleEdit={this.toggleEdit}/>;
+                render = <ItemEdit index={index} data={user} toggleEdit={this.toggleEdit}/>;
             } else {
-                render = <ManageUser.ItemShow index={index} data={user} toggleEdit={this.toggleEdit}/>;
+                render = <ItemShow index={index} data={user} toggleEdit={this.toggleEdit}/>;
             }
         } else {
-            render = <ManageUser.ItemNew data={user} index={index}/>;
+            render = <ItemNew data={user} index={index}/>;
         }
 
         return render;
@@ -184,7 +191,7 @@ ManageUser.Item = React.createClass({
 });
 
 
-ManageUser.Tip = React.createClass({
+var Tip = React.createClass({
     render: function () {
         return (
             <div className="tooltip top">
@@ -197,23 +204,23 @@ ManageUser.Tip = React.createClass({
     }
 });
 
-ManageUser.ItemShow = React.createClass({
+var ItemShow = React.createClass({
     handleEdit: function () {
         this.props.toggleEdit(true);
     },
     handleDelete: function (id, index) {
-        Alert.show({
+        ui.alert({
             title: '确定删除该用户？',
-            onCertain: function () {
-                UserListActions.deleteItem(id, index, function () {
-                    Alert.close();
+            onCertain: function (close) {
+                ListActions.deleteItem(id, index, function () {
+                    close();
                 });
             }
         });
 
     },
     handleManage: function (id, index, manage) {
-        UserListActions.toggleManage(id, index, manage);
+        ListActions.toggleManage(id, index, manage);
     },
     render: function () {
         var user = this.props.data;
@@ -255,7 +262,7 @@ ManageUser.ItemShow = React.createClass({
     }
 });
 
-ManageUser.ItemNew = React.createClass({
+var ItemNew = React.createClass({
     getInitialState: function () {
         return {errors: {}};
     },
@@ -269,12 +276,12 @@ ManageUser.ItemNew = React.createClass({
             mobile: this.refs.mobile.getDOMNode().value.trim()
         };
 
-        UserListActions.createItem(model, index, function (errors) {
+        ListActions.createItem(model, index, function (errors) {
             this.setState({errors: errors});
         }.bind(this));
     },
     handleCancel: function (index) {
-        UserListActions.removeItem(index);
+        ListActions.removeItem(index);
     },
     handleFocus: function (type) {
         delete this.state.errors[type];
@@ -378,7 +385,7 @@ ManageUser.ItemNew = React.createClass({
     }
 });
 
-ManageUser.ItemEdit = React.createClass({
+var ItemEdit = React.createClass({
     getInitialState: function () {
         return {errors: {}};
     },
@@ -393,7 +400,7 @@ ManageUser.ItemEdit = React.createClass({
             mobile: this.refs.mobile.getDOMNode().value.trim()
         };
 
-        UserListActions.updateItem(id, model, index, function (errors) {
+        ListActions.updateItem(id, model, index, function (errors) {
             errors ? this.setState({errors: errors}) : this.props.toggleEdit(false);
         }.bind(this));
     },
@@ -508,3 +515,6 @@ ManageUser.ItemEdit = React.createClass({
         )
     }
 });
+
+
+export default ManageUser;
