@@ -36,14 +36,18 @@ StoreDetail.FoodItem = React.createClass({
     getInitialState: function () {
         return {showBtn: false};
     },
-    handleMouseEnter: function () {
-        this.setState({showBtn: true});
-    },
-    handleMouseLeave: function () {
-        this.setState({showBtn: false});
-    },
-    handleClick: function () {
+    handleOrder: function () {
+        var food = this.props.data;
 
+        $.post('/vo/order', {
+            food: food._id,
+            store: food.store._id,
+            count: 1
+        }, function (response) {
+            if (response.code === constants.resCode.COMMON) {
+                alert('success')
+            }
+        });
     },
     render: function () {
         var food = this.props.data;
@@ -57,10 +61,13 @@ StoreDetail.FoodItem = React.createClass({
 
                         <p className="store-price">￥{food.price}</p>
 
-                        <p>
-                            <button className="btn btn-primary btn-sm mg-rt">订餐</button>
-                            <button className="btn btn-default btn-sm">加入购物车</button>
-                        </p>
+                        {auth.isLogin() ?
+                            <p>
+
+                                <button className="btn btn-primary btn-sm mg-rt" onClick={this.handleOrder}>订餐</button>
+                                <button className="btn btn-default btn-sm">加入购物车</button>
+                            </p> : ''
+                        }
                     </div>
                 </div>
             </div>

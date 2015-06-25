@@ -32,6 +32,15 @@ VoMyOrder.List = React.createClass({
             this.setState({list: response.data});
         }.bind(this));
     },
+    handleDelete: function (id, index) {
+        $.post('/vo/order/delete', {id: id}, function (response) {
+            if (response.code === constants.resCode.COMMON) {
+                this.state.list.splice(index,1);
+                this.forceUpdate();
+            }
+
+        }.bind(this));
+    },
     render: function () {
         return (
             <div className="col-lg-9">
@@ -55,8 +64,8 @@ VoMyOrder.List = React.createClass({
                         </thead>
                         <tbody>
                         {this.state.list.map(function (item, index) {
-                            return <VoMyOrder.Item data={item} key={index}/>
-                        })}
+                            return <VoMyOrder.Item data={item} key={index} handleDelete={this.handleDelete}/>
+                        }.bind(this))}
                         </tbody>
                     </table>
                     :
@@ -69,6 +78,9 @@ VoMyOrder.List = React.createClass({
 });
 
 VoMyOrder.Item = React.createClass({
+    handleCancel: function () {
+        this.props.handleDelete(this.props.data._id, this.props.index);
+    },
     render: function () {
         var order = this.props.data;
 
@@ -80,8 +92,7 @@ VoMyOrder.Item = React.createClass({
                 <td>{order.store.name}</td>
                 <td>{moment(order.addTime).format('YYYY-MM-DD HH:mm')}</td>
                 <td>
-                    <button type="button" className="btn btn-primary btn-xs js-delete"
-                            data-orderid="{{id}}">取消
+                    <button type="button" className="btn btn-primary btn-xs" onClick={this.handleCancel}>取消
                     </button>
                 </td>
             </tr>

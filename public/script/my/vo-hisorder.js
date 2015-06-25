@@ -35,27 +35,33 @@ VoHisOrder.List = React.createClass({
     render: function () {
         return (
             <div className="col-lg-9">
-                <table className="table table-hover manage-table">
-                    <col width="25%"/>
-                    <col width="10%"/>
-                    <col width="10%"/>
-                    <col width="25%"/>
-                    <col width="20%"/>
-                    <thead>
-                    <tr>
-                        <th>套餐</th>
-                        <th>价格</th>
-                        <th>份数</th>
-                        <th>店铺</th>
-                        <th>时间</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {this.state.list.map(function (item, index) {
-                        return <VoHisOrder.Item data={item} key={index}/>
-                    })}
-                    </tbody>
-                </table>
+                { this.state.list.length > 0 ?
+                    <table className="table table-hover manage-table">
+                        <col width="25%"/>
+                        <col width="10%"/>
+                        <col width="10%"/>
+                        <col width="25%"/>
+                        <col width="20%"/>
+                        <col width="10%"/>
+                        <thead>
+                        <tr>
+                            <th>套餐</th>
+                            <th>价格</th>
+                            <th>份数</th>
+                            <th>店铺</th>
+                            <th>时间</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {this.state.list.map(function (item, index) {
+                            return <VoMyOrder.Item data={item} key={index} handleDelete={this.handleDelete}/>
+                        }.bind(this))}
+                        </tbody>
+                    </table>
+                    :
+                    <h4 className="text-center">暂无订单，马上<Link to="store">点餐</Link></h4>
+                }
             </div>
         )
     }
