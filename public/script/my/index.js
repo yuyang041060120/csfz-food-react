@@ -43,7 +43,9 @@ var CurrentBox = React.createClass({
         return Object.keys(this.state.list).length > 0 ?
             <div>
                 <h2>当前订单
-                    <button className="btn btn-danger pull-right" onClick={this.handleClick}>结束本次订单</button>
+                    {auth.isLogin() && auth.getUser().manage ?
+                        <button className="btn btn-danger pull-right" onClick={this.handleClick}>结束本次订单</button>
+                        : ''}
                 </h2>
 
                 <div className="index-current">
