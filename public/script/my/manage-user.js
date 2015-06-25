@@ -302,7 +302,7 @@ var ItemNew = React.createClass({
                 <td>{index + 1}</td>
                 <td>
                     <div className="tip-hd">
-                        {realnameErr ? <ManageStore.Tip content={realnameErr}/> : ''}
+                        {realnameErr ? <Tip content={realnameErr}/> : ''}
                         <input
                             type="text"
                             className="form-control input-sm"
@@ -313,7 +313,7 @@ var ItemNew = React.createClass({
                 </td>
                 <td>
                     <div className="tip-hd">
-                        {deptErr ? <ManageStore.Tip content={deptErr}/> : ''}
+                        {deptErr ? <Tip content={deptErr}/> : ''}
                         <input
                             type="text"
                             className="form-control input-sm"
@@ -324,7 +324,7 @@ var ItemNew = React.createClass({
                 </td>
                 <td>
                     <div className="tip-hd">
-                        {dutyErr ? <ManageStore.Tip content={dutyErr}/> : ''}
+                        {dutyErr ? <Tip content={dutyErr}/> : ''}
                         <input
                             type="text"
                             className="form-control input-sm"
@@ -335,7 +335,7 @@ var ItemNew = React.createClass({
                 </td>
                 <td>
                     <div className="tip-hd">
-                        {emailErr ? <ManageStore.Tip content={emailErr}/> : ''}
+                        {emailErr ? <Tip content={emailErr}/> : ''}
                         <input
                             type="text"
                             className="form-control input-sm"
@@ -346,7 +346,7 @@ var ItemNew = React.createClass({
                 </td>
                 <td>
                     <div className="tip-hd">
-                        {telephoneErr ? <ManageStore.Tip content={telephoneErr}/> : ''}
+                        {telephoneErr ? <Tip content={telephoneErr}/> : ''}
                         <input
                             type="text"
                             className="form-control input-sm"
@@ -357,7 +357,7 @@ var ItemNew = React.createClass({
                 </td>
                 <td>
                     <div className="tip-hd">
-                        {mobileErr ? <ManageStore.Tip content={mobileErr}/> : ''}
+                        {mobileErr ? <Tip content={mobileErr}/> : ''}
                         <input
                             type="text"
                             className="form-control input-sm"
@@ -427,7 +427,7 @@ var ItemEdit = React.createClass({
                 <td>{index + 1}</td>
                 <td>
                     <div className="tip-hd">
-                        {realnameErr ? <ManageStore.Tip content={realnameErr}/> : ''}
+                        {realnameErr ? <Tip content={realnameErr}/> : ''}
                         <input
                             type="text"
                             className="form-control input-sm"
@@ -439,7 +439,7 @@ var ItemEdit = React.createClass({
                 </td>
                 <td>
                     <div className="tip-hd">
-                        {deptErr ? <ManageStore.Tip content={deptErr}/> : ''}
+                        {deptErr ? <Tip content={deptErr}/> : ''}
                         <input
                             type="text"
                             className="form-control input-sm"
@@ -451,7 +451,7 @@ var ItemEdit = React.createClass({
                 </td>
                 <td>
                     <div className="tip-hd">
-                        {dutyErr ? <ManageStore.Tip content={dutyErr}/> : ''}
+                        {dutyErr ? <Tip content={dutyErr}/> : ''}
                         <input
                             type="text"
                             className="form-control input-sm"
@@ -463,7 +463,7 @@ var ItemEdit = React.createClass({
                 </td>
                 <td>
                     <div className="tip-hd">
-                        {emailErr ? <ManageStore.Tip content={emailErr}/> : ''}
+                        {emailErr ? <Tip content={emailErr}/> : ''}
                         <input
                             type="text"
                             className="form-control input-sm"
@@ -475,7 +475,7 @@ var ItemEdit = React.createClass({
                 </td>
                 <td>
                     <div className="tip-hd">
-                        {telephoneErr ? <ManageStore.Tip content={telephoneErr}/> : ''}
+                        {telephoneErr ? <Tip content={telephoneErr}/> : ''}
                         <input
                             type="text"
                             className="form-control input-sm"
@@ -487,7 +487,7 @@ var ItemEdit = React.createClass({
                 </td>
                 <td>
                     <div className="tip-hd">
-                        {mobileErr ? <ManageStore.Tip content={mobileErr}/> : ''}
+                        {mobileErr ? <Tip content={mobileErr}/> : ''}
                         <input
                             type="text"
                             className="form-control input-sm"

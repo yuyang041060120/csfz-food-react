@@ -3228,7 +3228,7 @@
 	                _react2['default'].createElement(
 	                    'div',
 	                    { className: 'tip-hd' },
-	                    realnameErr ? _react2['default'].createElement(ManageStore.Tip, { content: realnameErr }) : '',
+	                    realnameErr ? _react2['default'].createElement(Tip, { content: realnameErr }) : '',
 	                    _react2['default'].createElement('input', {
 	                        type: 'text',
 	                        className: 'form-control input-sm',
@@ -3243,7 +3243,7 @@
 	                _react2['default'].createElement(
 	                    'div',
 	                    { className: 'tip-hd' },
-	                    deptErr ? _react2['default'].createElement(ManageStore.Tip, { content: deptErr }) : '',
+	                    deptErr ? _react2['default'].createElement(Tip, { content: deptErr }) : '',
 	                    _react2['default'].createElement('input', {
 	                        type: 'text',
 	                        className: 'form-control input-sm',
@@ -3258,7 +3258,7 @@
 	                _react2['default'].createElement(
 	                    'div',
 	                    { className: 'tip-hd' },
-	                    dutyErr ? _react2['default'].createElement(ManageStore.Tip, { content: dutyErr }) : '',
+	                    dutyErr ? _react2['default'].createElement(Tip, { content: dutyErr }) : '',
 	                    _react2['default'].createElement('input', {
 	                        type: 'text',
 	                        className: 'form-control input-sm',
@@ -3273,7 +3273,7 @@
 	                _react2['default'].createElement(
 	                    'div',
 	                    { className: 'tip-hd' },
-	                    emailErr ? _react2['default'].createElement(ManageStore.Tip, { content: emailErr }) : '',
+	                    emailErr ? _react2['default'].createElement(Tip, { content: emailErr }) : '',
 	                    _react2['default'].createElement('input', {
 	                        type: 'text',
 	                        className: 'form-control input-sm',
@@ -3288,7 +3288,7 @@
 	                _react2['default'].createElement(
 	                    'div',
 	                    { className: 'tip-hd' },
-	                    telephoneErr ? _react2['default'].createElement(ManageStore.Tip, { content: telephoneErr }) : '',
+	                    telephoneErr ? _react2['default'].createElement(Tip, { content: telephoneErr }) : '',
 	                    _react2['default'].createElement('input', {
 	                        type: 'text',
 	                        className: 'form-control input-sm',
@@ -3303,7 +3303,7 @@
 	                _react2['default'].createElement(
 	                    'div',
 	                    { className: 'tip-hd' },
-	                    mobileErr ? _react2['default'].createElement(ManageStore.Tip, { content: mobileErr }) : '',
+	                    mobileErr ? _react2['default'].createElement(Tip, { content: mobileErr }) : '',
 	                    _react2['default'].createElement('input', {
 	                        type: 'text',
 	                        className: 'form-control input-sm',
@@ -3393,7 +3393,7 @@
 	                _react2['default'].createElement(
 	                    'div',
 	                    { className: 'tip-hd' },
-	                    realnameErr ? _react2['default'].createElement(ManageStore.Tip, { content: realnameErr }) : '',
+	                    realnameErr ? _react2['default'].createElement(Tip, { content: realnameErr }) : '',
 	                    _react2['default'].createElement('input', {
 	                        type: 'text',
 	                        className: 'form-control input-sm',
@@ -3409,7 +3409,7 @@
 	                _react2['default'].createElement(
 	                    'div',
 	                    { className: 'tip-hd' },
-	                    deptErr ? _react2['default'].createElement(ManageStore.Tip, { content: deptErr }) : '',
+	                    deptErr ? _react2['default'].createElement(Tip, { content: deptErr }) : '',
 	                    _react2['default'].createElement('input', {
 	                        type: 'text',
 	                        className: 'form-control input-sm',
@@ -3425,7 +3425,7 @@
 	                _react2['default'].createElement(
 	                    'div',
 	                    { className: 'tip-hd' },
-	                    dutyErr ? _react2['default'].createElement(ManageStore.Tip, { content: dutyErr }) : '',
+	                    dutyErr ? _react2['default'].createElement(Tip, { content: dutyErr }) : '',
 	                    _react2['default'].createElement('input', {
 	                        type: 'text',
 	                        className: 'form-control input-sm',
@@ -3441,7 +3441,7 @@
 	                _react2['default'].createElement(
 	                    'div',
 	                    { className: 'tip-hd' },
-	                    emailErr ? _react2['default'].createElement(ManageStore.Tip, { content: emailErr }) : '',
+	                    emailErr ? _react2['default'].createElement(Tip, { content: emailErr }) : '',
 	                    _react2['default'].createElement('input', {
 	                        type: 'text',
 	                        className: 'form-control input-sm',
@@ -3457,7 +3457,7 @@
 	                _react2['default'].createElement(
 	                    'div',
 	                    { className: 'tip-hd' },
-	                    telephoneErr ? _react2['default'].createElement(ManageStore.Tip, { content: telephoneErr }) : '',
+	                    telephoneErr ? _react2['default'].createElement(Tip, { content: telephoneErr }) : '',
 	                    _react2['default'].createElement('input', {
 	                        type: 'text',
 	                        className: 'form-control input-sm',
@@ -3473,7 +3473,7 @@
 	                _react2['default'].createElement(
 	                    'div',
 	                    { className: 'tip-hd' },
-	                    mobileErr ? _react2['default'].createElement(ManageStore.Tip, { content: mobileErr }) : '',
+	                    mobileErr ? _react2['default'].createElement(Tip, { content: mobileErr }) : '',
 	                    _react2['default'].createElement('input', {
 	                        type: 'text',
 	                        className: 'form-control input-sm',
