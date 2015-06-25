@@ -1,6 +1,7 @@
 import React     from 'react';
 import Router    from 'react-router';
 import $         from 'jquery';
+import auth      from './auth';
 import constants from './component/constants';
 import ui        from './component/ui';
 
