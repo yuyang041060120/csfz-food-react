@@ -28,7 +28,7 @@ var routes = (
         <Route name="manage" path="manage" handler={Manage}>
             <Route name="manage-store" path="store" handler={ManageStore}/>
             <Route name="manage-food" path=":storeId/food" handler={ManageFood}/>
-            <Route name="user" path="user" handler={User}/>
+            <Route name="user" path="user" handler={ManageUser}/>
         </Route>
         <Route name="vo" path="vo" handler={Manage}>
             <Route name="my-order" path="myorder" handler={VoMyOrder}/>

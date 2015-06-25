@@ -42,7 +42,6 @@ VoHisOrder.List = React.createClass({
                         <col width="10%"/>
                         <col width="25%"/>
                         <col width="20%"/>
-                        <col width="10%"/>
                         <thead>
                         <tr>
                             <th>套餐</th>
@@ -50,12 +49,11 @@ VoHisOrder.List = React.createClass({
                             <th>份数</th>
                             <th>店铺</th>
                             <th>时间</th>
-                            <th>操作</th>
                         </tr>
                         </thead>
                         <tbody>
                         {this.state.list.map(function (item, index) {
-                            return <VoMyOrder.Item data={item} key={index} handleDelete={this.handleDelete}/>
+                            return <VoHisOrder.Item data={item} key={index} handleDelete={this.handleDelete}/>
                         }.bind(this))}
                         </tbody>
                     </table>

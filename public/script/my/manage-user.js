@@ -1,9 +1,9 @@
-var User = React.createClass({
+var ManageUser = React.createClass({
     render: function () {
         return (
             <div className="user-container">
-                <User.New />
-                <User.List />
+                <ManageUser.New />
+                <ManageUser.List />
             </div>
         )
     }
@@ -88,7 +88,7 @@ var UserListStore = Reflux.createStore({
     }
 });
 
-User.New = React.createClass({
+ManageUser.New = React.createClass({
     handleClick: function () {
         UserListActions.addItem();
     },
@@ -106,7 +106,7 @@ User.New = React.createClass({
     }
 });
 
-User.List = React.createClass({
+ManageUser.List = React.createClass({
     mixins: [Reflux.connect(UserListStore, 'list')],
     getInitialState: function () {
         return {list: []};
@@ -148,7 +148,7 @@ User.List = React.createClass({
                 </thead>
                 <tbody>
                 {this.state.list.map(function (item, index) {
-                    return <User.Item data={item} key={index} index={index}/>
+                    return <ManageUser.Item data={item} key={index} index={index}/>
                 })}
                 </tbody>
             </table>
@@ -157,7 +157,7 @@ User.List = React.createClass({
 });
 
 
-User.Item = React.createClass({
+ManageUser.Item = React.createClass({
     getInitialState: function () {
         return {isEdit: false};
     },
@@ -171,12 +171,12 @@ User.Item = React.createClass({
 
         if (user._id) {
             if (this.state.isEdit) {
-                render = <User.ItemEdit index={index} data={user} toggleEdit={this.toggleEdit}/>;
+                render = <ManageUser.ItemEdit index={index} data={user} toggleEdit={this.toggleEdit}/>;
             } else {
-                render = <User.ItemShow index={index} data={user} toggleEdit={this.toggleEdit}/>;
+                render = <ManageUser.ItemShow index={index} data={user} toggleEdit={this.toggleEdit}/>;
             }
         } else {
-            render = <User.ItemNew data={user} index={index}/>;
+            render = <ManageUser.ItemNew data={user} index={index}/>;
         }
 
         return render;
@@ -184,7 +184,7 @@ User.Item = React.createClass({
 });
 
 
-User.Tip = React.createClass({
+ManageUser.Tip = React.createClass({
     render: function () {
         return (
             <div className="tooltip top">
@@ -197,7 +197,7 @@ User.Tip = React.createClass({
     }
 });
 
-User.ItemShow = React.createClass({
+ManageUser.ItemShow = React.createClass({
     handleEdit: function () {
         this.props.toggleEdit(true);
     },
@@ -255,7 +255,7 @@ User.ItemShow = React.createClass({
     }
 });
 
-User.ItemNew = React.createClass({
+ManageUser.ItemNew = React.createClass({
     getInitialState: function () {
         return {errors: {}};
     },
@@ -378,7 +378,7 @@ User.ItemNew = React.createClass({
     }
 });
 
-User.ItemEdit = React.createClass({
+ManageUser.ItemEdit = React.createClass({
     getInitialState: function () {
         return {errors: {}};
     },

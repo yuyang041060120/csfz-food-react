@@ -83,3 +83,10 @@ td {
 .store-price{
     color: darkred;
 }
+
+.ui-tip {
+    position: fixed;
+    top: 50px;
+    padding: 10px;
+    font-size: 14px;
+}

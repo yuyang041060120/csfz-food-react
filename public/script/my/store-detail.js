@@ -45,7 +45,13 @@ StoreDetail.FoodItem = React.createClass({
             count: 1
         }, function (response) {
             if (response.code === constants.resCode.COMMON) {
-                alert('success')
+                Tip.show({
+                    content: '点餐成功'
+                });
+            }else{
+                Tip.show({
+                    content: '点餐失败'
+                });
             }
         });
     },
@@ -65,7 +71,6 @@ StoreDetail.FoodItem = React.createClass({
                             <p>
 
                                 <button className="btn btn-primary btn-sm mg-rt" onClick={this.handleOrder}>订餐</button>
-                                <button className="btn btn-default btn-sm">加入购物车</button>
                             </p> : ''
                         }
                     </div>

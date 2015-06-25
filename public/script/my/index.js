@@ -15,6 +15,18 @@ Index.CurrentBox = React.createClass({
     getInitialState: function () {
         return {list: {}};
     },
+    handleClick: function () {
+        Alert.show({
+            title:'确定结束本次订餐？',
+            onCertain: function () {
+                $.post('/vo/order/end', function (response) {
+                    if(response.code===constants.resCode.COMMON){
+                        location.reload();
+                    }
+                });
+            }
+        });
+    },
     componentDidMount: function () {
         $.get('/current/list', function (response) {
             this.setState({list: response.data});
@@ -22,7 +34,17 @@ Index.CurrentBox = React.createClass({
     },
     render: function () {
         return Object.keys(this.state.list).length > 0 ?
-            <div><h2>当前订单</h2><div className="index-current"><Index.StoreList data={this.state.list}/></div></div> : <div></div>;
+            <div>
+                <h2>当前订单
+                    <button className="btn btn-danger pull-right" onClick={this.handleClick}>结束本次订单</button>
+                </h2>
+
+                <div className="index-current">
+                    <Index.StoreList data={this.state.list}/>
+                </div>
+            </div>
+            :
+            <div></div>;
     }
 });
 
@@ -154,7 +176,7 @@ Index.OrderItem = React.createClass({
                 <td>{item.count}</td>
                 <td>{item.total}</td>
                 <td>
-                    {item.list.map(function (i,index) {
+                    {item.list.map(function (i, index) {
                         return (
                             <p key={index}>{i.creater.realname} {i.count}份</p>
                         )

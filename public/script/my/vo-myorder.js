@@ -35,8 +35,11 @@ VoMyOrder.List = React.createClass({
     handleDelete: function (id, index) {
         $.post('/vo/order/delete', {id: id}, function (response) {
             if (response.code === constants.resCode.COMMON) {
-                this.state.list.splice(index,1);
+                this.state.list.splice(index, 1);
                 this.forceUpdate();
+                Tip.show({
+                    content: '取消成功'
+                });
             }
 
         }.bind(this));
